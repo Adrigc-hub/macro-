@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Macro Clicker Simulator</title>
+    <!-- Configuración para que funcione como App Instalable (PWA) -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlJvYmxveCBNYWNybyBDbGlja2VyIiwKICAic2hvcnRfbmFtZSI6ICJNYWNyb0NsaWNrZXIiLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzFhMWExYSIsCiAgInRoZW1lX2NvbG9yIjogIiNlNjNjMTIiCn0=">
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #121212; color: white; margin: 0; padding: 20px; text-align: center; }
+        .container { max-width: 500px; margin: 0 auto; background: #1e1e1e; padding: 20px; border-radius: 15px; border: 2px solid #e63c12; }
+        h1 { color: #e63c12; margin-bottom: 5px; font-size: 24px; }
+        p { color: #aaaaaa; font-size: 14px; }
+        
+        /* Botón de Instalación */
+        #btnInstall { background: #00cc66; color: white; border: none; padding: 12px 20px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; margin-bottom: 20px; display: none; width: 100%; }
+        
+        /* Zona de Simulación de Pantalla de Juego */
+        .game-screen { width: 100%; height: 250px; background: #2a2a2a; margin: 20px 0; border-radius: 10px; position: relative; overflow: hidden; border: 1px dashed #555; }
+        .game-title { position: absolute; top: 10px; left: 10px; color: #555; font-weight: bold; font-size: 12px; }
+        
+        /* Menú Flotante del Autoclicker */
+        .clicker-menu { position: absolute; top: 30px; left: 10px; background: rgba(0, 0, 0, 0.85); border: 1px solid #e63c12; border-radius: 8px; padding: 8px; display: flex; flex-direction: column; gap: 8px; z-index: 10; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .menu-btn { width: 35px; height: 35px; border-radius: 50%; border: none; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+        .btn-play { background: #00cc66; color: white; }
+        .btn-record { background: #e63c12; color: white; }
+        .btn-clear { background: #555; color: white; }
+        
+        /* Efectos visuales de clics simulados */
+        .click-indicator { position: absolute; width: 20px; height: 20px; background: rgba(230, 60, 18, 0.6); border-radius: 50%; transform: translate(-50%, -50%); animation: ripple 0.4s linear; pointer-events: none; }
+        @keyframes ripple { to { width: 50px; height: 50px; opacity: 0; } }
+
+        /* Consola de Estado */
+        .console { background: #000; color: #00ff00; font-family: monospace; padding: 10px; text-align: left; border-radius: 5px; height: 100px; overflow-y: auto; font-size: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Roblox Macro Clicker</h1>
+    <p>Concepto de Macro con IA & PWA instalable</p>
+
+    <!-- Botón que detectará si se puede instalar en el móvil -->
+    <button id="btnInstall">📲 INSTALAR EN INICIO (ESTILO APK)</button>
+
+    <!-- Caja de simulación: Aquí juegas y el macro graba -->
+    <div class="game-screen" id="gameScreen">
+        <div class="game-title">ÁREA DE PRUEBA (SIMULA ROBLOX)</div>
+        
+        <!-- El Menú Flotante tipo Autoclicker de Móvil -->
+        <div class="clicker-menu">
+            <button class="menu-btn btn-record" id="recordBtn" title="Grabar Macro">⏺️</button>
+            <button class="menu-btn btn-play" id="playBtn" title="Reproducir Macro">▶️</button>
+            <button class="menu-btn btn-clear" id="clearBtn" title="Borrar">🗑️</button>
+        </div>
+    </div>
+
+    <div class="console" id="consoleLogs">> Sistema listo. Haz clic en la pantalla gris para interactuar.</div>
+</div>
+
+<script>
+    // --- LÓGICA DE INSTALACIÓN (PWA) ---
+    let deferredPrompt;
+    const btnInstall = document.getElementById('btnInstall');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Evita que Chrome muestre el prompt automático
+        e.preventDefault();
+        deferredPrompt = e;
+        // Muestra nuestro botón personalizado
+        btnInstall.style.display = 'block';
+    });
+
+    btnInstall.addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                log("¡App instalada con éxito en tu pantalla de inicio!");
+                btnInstall.style.display = 'none';
+            }
+            deferredPrompt = null;
+        }
+    });
+
+    // Registrar un Service Worker básico (necesario para que sea instalable)
+    if ('serviceWorker' in navigator) {
+        const swCode = `self.addEventListener('fetch', function(e) { /* Cache opcional */ });`;
+        const blob = new Blob([swCode], {type: 'application/javascript'});
+        const swUrl = URL.createObjectURL(blob);
+        navigator.serviceWorker.register(swUrl).catch(err => console.log("SW error:", err));
+    }
+
+    // --- LÓGICA DEL AUTOCLICKER / MACRO ---
+    const gameScreen = document.getElementById('gameScreen');
+    const recordBtn = document.getElementById('recordBtn');
+    const playBtn = document.getElementById('playBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const consoleLogs = document.getElementById('consoleLogs');
+
+    let isRecording = false;
+    let isPlaying = false;
+    let macroEvents = [];
+    let startTime = 0;
+    let playbackTimeout;
+
+    function log(text) {
+        consoleLogs.innerHTML += `<br>> ${text}`;
+        consoleLogs.scrollTop = consoleLogs.scrollHeight;
+    }
+
+    // Grabar acciones en la pantalla de prueba
+    gameScreen.addEventListener('mousedown', (e) => {
+        // Evitar registrar clics si se presiona el menú flotante
+        if (e.target.closest('.clicker-menu')) return;
+
+        const rect = gameScreen.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Crear efecto visual de clic
+        createIndicator(x, y);
+
+        if (isRecording) {
+            const timeOffset = Date.now() - startTime;
+            macroEvents.push({ x, y, time: timeOffset });
+            log(`Grabado clic en: X:${Math.round(x)} Y:${Math.round(y)} - T:${timeOffset}ms`);
+        } else if (!isPlaying) {
+            log(`Clic manual en: X:${Math.round(x)} Y:${Math.round(y)}`);
+        }
+    });
+
+    function createIndicator(x, y) {
+        const ind = document.createElement('div');
+        ind.className = 'click-indicator';
+        ind.style.left = `${x}px`;
+        ind.style.top = `${y}px`;
+        gameScreen.appendChild(ind);
+        setTimeout(() => ind.remove(), 400);
+    }
+
+    // Botón Grabar
+    recordBtn.addEventListener('click', () => {
+        if (isPlaying) return;
+        
+        isRecording = !isRecording;
+        if (isRecording) {
+            macroEvents = [];
+            startTime = Date.now();
+            recordBtn.style.background = '#ff0000';
+            recordBtn.innerText = '⏹️';
+            log("Grabando... Todo lo que presiones en la pantalla gris se guardará.");
+        } else {
+            recordBtn.style.background = '#e63c12';
+            recordBtn.innerText = '⏺️';
+            log(`Grabación finalizada. Pasos guardados: ${macroEvents.length}`);
+        }
+    });
+
+    // Botón Reproducir (Macro IA simulado)
+    playBtn.addEventListener('click', () => {
+        if (isRecording || macroEvents.length === 0 || isPlaying) {
+            if(macroEvents.length === 0) log("No hay ninguna macro grabada.");
+            return;
+        }
+
+        isPlaying = true;
+        log("Ejecutando Macro en bucle...");
+        playMacro(0);
+    });
+
+    function playMacro(index) {
+        if (!isPlaying) return;
+
+        if (index >= macroEvents.length) {
+            // Reiniciar en bucle como un autoclicker real
+            log("Bucle completo. Reiniciando macro...");
+            playbackTimeout = setTimeout(() => playMacro(0), 500);
+            return;
+        }
+
+        const ev = macroEvents[index];
+        
+        // El retraso simula el tiempo exacto entre toques
+        let delay = index === 0 ? ev.time : ev.time - macroEvents[index - 1].time;
+        if(delay < 0) delay = 0;
+
+        playbackTimeout = setTimeout(() => {
+            createIndicator(ev.x, ev.y);
+            log(`[Auto] Clic ejecutado en X:${Math.round(ev.x)} Y:${Math.round(ev.y)}`);
+            playMacro(index + 1);
+        }, delay);
+    }
+
+    // Botón Limpiar / Detener
+    clearBtn.addEventListener('click', () => {
+        isPlaying = false;
+        isRecording = false;
+        clearTimeout(playbackTimeout);
+        macroEvents = [];
+        recordBtn.style.background = '#e63c12';
+        recordBtn.innerText = '⏺️';
+        log("Macro detenida y memoria limpia.");
+    });
+</script>
+
+</body>
+</html>
+
