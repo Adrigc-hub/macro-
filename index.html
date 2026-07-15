@@ -6,279 +6,150 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Stelar Macro</title>
-    <!-- MANIFEST INTEGRADO RECONSTRUIDO Y CORREGIDO 100% SIN ERRORES -->
-    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIlN0ZWxhciBNYWNybyIsICJzaG9ydF9uYW1lIjogIlN0ZWxhck1hY3JvIiwgInN0YXJ0X3VybCI6ICIuIiwgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwNTA2MGYiLCAidGhlbWVfY29sb3IiOiAiIzAwYWZmZiIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7dXRmOCw8c3ZnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zycgdmlld0JveD0nMCAwIDEwMCAxMDAnPjxjaXJjbGUgY3g9JzUwJyBjeT0nNTAnIHI9JzQwJyBmaWxsPSclMjMwMGFmZmYnLz48L3N2Zz4iLCAic2l6ZXMiOiAiMTkyeDE5MiIsICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiLCAicHVycG9zZSI6ICJhbnkifV19">
+    <!-- MANIFEST CON ICONO FORZADO EN HD -->
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIlN0ZWxhciBNYWNybyIsICJzaG9ydF9uYW1lIjogIlN0ZWxhck1hY3JvIiwgInN0YXJ0X3VybCI6ICIuIiwgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwNTA2MGYiLCAidGhlbWVfY29sb3IiOiAiIzAwYWZmZiIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITmhkbVp5SW50b2N3b2daR0YwWVNJZ2V6SjNMV052YkdVb2pSMmR6TG5jekxuTnlaM2N2TWpBd01DOWpZWFJuSWdadmFXZDFZbTkyYjI0Z2RUbHdaVzRpTENJZ2V6STZPakV3TUNJZ2V6STZPakV3TUNKbFpYTWdlbUp6SWdadmJXMWxjeUlnYm1GdFpTSTZJQ0paZDJjZ0lDSjVJQ0pkWm1sc2JDSTZJQ0ptYVd4c2N5SWdiV0YyWlhJZ2MzUjliV1VnZXlKamFYSmpiR1VnWTNnOUp6UXdJQ0p6ZURVOUp6UXdJQ0p5UFQwd0p6UXdJQ0ptYVc1c2JEMGdaWGg1Yld3Z2RtbGxkM0p2ZURwaVlYTmxaRFl6TkNKOUxqdz0iLCAic2l6ZXMiOiAiMTkyeDE5MiIsICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiLCAicHVycG9zZSI6ICJhbnkgaX crappyIn1dfQ==">
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; padding: 0; }
         body { background: #04050e; color: #ffffff; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* PANTALLA DE CARGA CON PROTOGEN PIXEL ART */
+        /* PANTALLA DE CARGA */
         #loaderScreen {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: radial-gradient(circle, #090c1f 0%, #020307 100%);
             z-index: 20000; display: flex; flex-direction: column;
             align-items: center; justify-content: center; transition: opacity 0.6s ease-in-out;
         }
-        .protogen-box {
-            display: flex; flex-direction: column; align-items: center; gap: 15px;
-        }
-        #protogenCanvas {
-            width: 180px; height: 180px;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: -webkit-crisp-edges;
-            image-rendering: pixelated;
-            image-rendering: crisp-edges;
-        }
+        .protogen-box { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        #protogenCanvas { width: 200px; height: 200px; image-rendering: pixelated; }
         .loading-bar-container {
             width: 240px; height: 6px; background: rgba(255, 255, 255, 0.1);
             border-radius: 3px; overflow: hidden; margin-top: 10px; border: 1px solid rgba(0, 188, 255, 0.2);
         }
-        .loading-bar {
-            width: 0%; height: 100%; background: linear-gradient(90deg, #00bcff, #8a2be2);
-            box-shadow: 0 0 8px #00bcff; transition: width 0.1s linear;
-        }
-        .loading-text {
-            color: #00bcff; font-size: 11px; font-weight: bold; letter-spacing: 2px;
-            text-transform: uppercase; text-shadow: 0 0 5px rgba(0, 188, 255, 0.5);
-        }
+        .loading-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #b23b19, #f9b233); box-shadow: 0 0 8px #f9b233; }
+        .loading-text { color: #f9b233; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* INTERFAZ DE INSTALACIÓN MEJORADA */
-        #installerScreen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: radial-gradient(circle, #090e24 0%, #030409 100%); z-index: 10000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 25px; }
-        .space-logo { width: 90px; height: 90px; margin-bottom: 25px; animation: planetOrbit 8s linear infinite; }
-        @keyframes planetOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        .welcome-card { background: rgba(10, 14, 32, 0.95); border: 2px solid #00bcff; border-radius: 20px; padding: 30px; text-align: center; max-width: 390px; box-shadow: 0 0 40px rgba(0, 188, 255, 0.35); }
-        .welcome-card h2 { color: #00bcff; font-size: 24px; margin-bottom: 12px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(0,188,255,0.5); }
-        .welcome-card p { font-size: 13px; color: #9ab0e5; line-height: 1.6; margin-bottom: 25px; }
-        
-        .btn-group { display: flex; flex-direction: column; gap: 10px; width: 100%; }
-        .giant-btn { background: linear-gradient(135deg, #00bcff 0%, #0055ff 100%); color: white; border: none; padding: 16px; width: 100%; border-radius: 10px; font-weight: 800; font-size: 14px; letter-spacing: 1px; cursor: pointer; box-shadow: 0 6px 20px rgba(0, 188, 255, 0.4); transition: 0.3s; }
-        .giant-btn:active { transform: scale(0.96); }
-        .skip-btn { background: rgba(255, 255, 255, 0.08); color: #9ab0e5; border: 1px solid rgba(255, 255, 255, 0.15); padding: 12px; width: 100%; border-radius: 10px; font-weight: bold; font-size: 12px; cursor: pointer; transition: 0.2s; }
-        .skip-btn:active { background: rgba(255, 255, 255, 0.15); }
-
-        /* PANTALLA OBLIGATORIA DE PERMISOS DE SISTEMA */
-        #permissionScreen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #030409; z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-        .perm-btn { background: #ff6a00; border: none; border-bottom: 4px solid #cc4400; width: 100%; max-width: 320px; padding: 16px; font-weight: bold; font-size: 14px; border-radius: 8px; cursor: pointer; color: white; margin-top: 20px; transition: 0.2s; }
-        .perm-btn:active { transform: scale(0.97); border-bottom-width: 1px; margin-top: 23px; }
-
-        /* CONTENEDOR PRINCIPAL - STELAR MACRO */
+        /* INTERFAZ PRINCIPAL */
         .app-shell { display: flex; flex-direction: column; height: 100%; }
         .navbar { height: 60px; background: rgba(8, 11, 26, 0.95); display: flex; align-items: center; justify-content: space-between; padding: 0 15px; border-bottom: 1px solid #162044; }
-        .navbar h1 { font-size: 18px; color: #00bcff; font-weight: 900; letter-spacing: 1.5px; text-shadow: 0 0 8px rgba(0,188,255,0.3); }
+        .navbar h1 { font-size: 18px; color: #f9b233; font-weight: 900; }
         .nav-controls { display: flex; gap: 8px; }
         .nav-btn { border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; font-size: 11px; color: white; cursor: pointer; }
-        .btn-red { background: #ff2a2a; box-shadow: 0 0 8px rgba(255,42,42,0.4); }
-        .btn-purple { background: #8a2be2; box-shadow: 0 0 8px rgba(138,43,226,0.4); }
+        .btn-red { background: #b23b19; }
+        .btn-purple { background: #8a2be2; }
 
-        /* Canvas de estrellas de fondo */
         .workspace { flex-grow: 1; background: #020307; position: relative; overflow: hidden; }
         .starfield { position: absolute; top:0; left:0; width:100%; height:100%; pointer-events: none; }
 
-        /* Pestañas de Características */
-        .space-features { position: absolute; top: 15px; left: 15px; right: 15px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; z-index: 50; }
-        .space-tab-btn { background: rgba(12, 16, 38, 0.9); border: 1px solid #182754; padding: 12px 6px; border-radius: 8px; font-size: 10px; font-weight: bold; color: #9ab0e5; cursor: pointer; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.2s; }
-        .space-tab-btn.active { border-color: #00bcff; color: #00bcff; background: rgba(0, 188, 255, 0.15); box-shadow: 0 0 12px rgba(0,188,255,0.2); }
-
-        /* Paneles dinámicos */
-        .space-panel { position: absolute; top: 70px; left: 15px; right: 15px; background: rgba(6, 8, 20, 0.95); border: 1px solid #19264f; border-radius: 10px; padding: 14px; font-size: 11.5px; display: none; z-index: 45; color: #b1c4f0; line-height: 1.5; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-
-        /* MODO SOLAR SMASH */
-        .solar-smash-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; display: none; align-items: center; justify-content: center; pointer-events: none; }
+        /* SOLAR SMASH */
+        .solar-smash-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
         .planet { width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #2a6ac5, #00bfff, #020307); box-shadow: 0 0 40px rgba(0, 191, 255, 0.5); position: relative; cursor: pointer; pointer-events: auto; transition: transform 0.1s; }
-        .planet:active { transform: scale(0.95); }
-        .planet-health { position: absolute; top: -35px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: bold; border: 1px solid #ff3333; color: #ff3333; width: max-content; letter-spacing: 0.5px; }
-        .resource-counter { position: absolute; top: -60px; left: 50%; transform: translateX(-50%); color: #00ffaa; font-weight: bold; font-size: 11px; text-shadow: 0 0 5px rgba(0,255,170,0.5); }
-        .dmg-text { position: absolute; font-weight: 900; font-size: 24px; color: #ff6a00; pointer-events: none; animation: floatAndFade 0.6s ease-out forwards; text-shadow: 0 0 8px #000; }
-        @keyframes floatAndFade { 0% { transform: translateY(0) scale(0.8); opacity: 1; } 100% { transform: translateY(-90px) scale(1.3); opacity: 0; } }
+        .planet-health { position: absolute; top: -35px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); padding: 4px 10px; border-radius: 12px; font-size: 10px; border: 1px solid #ff3333; color: #ff3333; width: max-content; }
+        .resource-counter { position: absolute; top: -60px; left: 50%; transform: translateX(-50%); color: #00ffaa; font-weight: bold; font-size: 11px; }
+        .dmg-text { position: absolute; font-weight: 900; font-size: 24px; color: #ff6a00; pointer-events: none; animation: floatAndFade 0.6s ease-out forwards; }
+        @keyframes floatAndFade { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-90px); opacity: 0; } }
 
-        /* MODO MERCANCÍAS ESPACIALES */
-        .shop-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; background: rgba(3, 4, 9, 0.95); display: none; flex-direction: column; padding: 20px; padding-top: 80px; z-index: 60; box-sizing: border-box; overflow-y: auto; }
-        .shop-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #1a2244; padding-bottom: 10px; }
-        .shop-title { font-size: 18px; color: #8a2be2; font-weight: bold; letter-spacing: 1px; }
-        .cargo-list { display: flex; flex-direction: column; gap: 10px; }
-        .cargo-item { background: rgba(14, 18, 41, 0.8); border: 1px solid #233166; border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
-        .cargo-info h3 { font-size: 13px; color: #00bcff; margin-bottom: 4px; }
-        .cargo-info p { font-size: 10.5px; color: #8fa0dd; }
-        .cargo-buy-btn { background: #8a2be2; border: none; color: white; padding: 8px 12px; border-radius: 6px; font-weight: bold; font-size: 11px; cursor: pointer; transition: 0.2s; }
-        .cargo-buy-btn:active { transform: scale(0.95); }
+        /* WIDGET FLOTANTE PRO */
+        .floating-widget { position: absolute; top: 130px; right: 15px; background: rgba(8, 11, 26, 0.95); border: 1px solid #f9b233; border-radius: 20px; padding: 8px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 0 20px rgba(249, 178, 51, 0.25); z-index: 100; touch-action: none; }
+        .widget-btn { width: 38px; height: 38px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: white; transition: 0.2s; font-weight: bold; }
+        .btn-play { background: #2f80ed; }
+        .btn-add { background: #27ae60; }
+        .btn-record { background: #b23b19; }
+        .btn-ai { background: #f2c94c; color: #000; }
+        .btn-clear { background: #4f4f4f; }
+        .btn-handle { background: #162044; cursor: move; }
 
-        /* WIDGET FLOTANTE ARRSTRABLE */
-        .floating-widget { position: absolute; top: 130px; left: 15px; background: rgba(8, 11, 26, 0.95); border: 1px solid #00bcff; border-radius: 20px; padding: 8px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 0 20px rgba(0, 188, 255, 0.25); z-index: 100; touch-action: none; }
-        .widget-btn { width: 38px; height: 38px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; color: white; transition: 0.2s; }
-        .btn-blue-play { background: #2f80ed; }
-        .btn-green-add { background: #27ae60; }
-        .btn-orange-repeat { background: #f2994a; }
-        .btn-grey-settings { background: #4f4f4f; }
-        .btn-move-handle { background: #162044; cursor: move; font-size: 14px; }
-
-        /* Elementos del Macro */
-        .click-target-node { position: absolute; width: 34px; height: 34px; border-radius: 50%; border: 3px solid #00bcff; background: rgba(0, 188, 255, 0.2); color: #fff; font-weight: bold; display: flex; align-items: center; justify-content: center; font-size: 14px; transform: translate(-50%, -50%); pointer-events: none; box-shadow: 0 0 12px #00bcff; }
-        .laser-beam { position: absolute; height: 3px; background: #00ffcc; transform-origin: top left; pointer-events: none; z-index: 90; box-shadow: 0 0 12px #00ffcc; transition: opacity 0.15s; }
+        /* NODOS DE CLIC */
+        .click-target-node { position: absolute; width: 34px; height: 34px; border-radius: 50%; border: 3px solid #f9b233; background: rgba(249, 178, 51, 0.2); color: #fff; font-weight: bold; display: flex; align-items: center; justify-content: center; font-size: 14px; transform: translate(-50%, -50%); pointer-events: none; }
+        .laser-beam { position: absolute; height: 3px; background: #ff2a2a; transform-origin: top left; pointer-events: none; z-index: 90; }
 
         /* Consola de logs */
-        .console-box { height: 90px; background: #010205; color: #00ffaa; font-family: 'Courier New', Courier, monospace; font-size: 11px; padding: 10px; overflow-y: auto; border-top: 1px solid #141b35; }
+        .console-box { height: 90px; background: #010205; color: #f9b233; font-family: monospace; font-size: 11px; padding: 10px; overflow-y: auto; border-top: 1px solid #141b35; }
     </style>
 </head>
 <body>
 
-<!-- PANTALLA DE CARGA CON PROTOGEN CORREGIDO -->
+<!-- CARGADOR -->
 <div id="loaderScreen">
     <div class="protogen-box">
         <canvas id="protogenCanvas" width="64" height="64"></canvas>
         <span class="loading-text" id="loaderStatusText">Iniciando Red Estelar...</span>
-        <div class="loading-bar-container">
-            <div class="loading-bar" id="loadProgressBar"></div>
-        </div>
+        <div class="loading-bar-container"><div class="loading-bar" id="loadProgressBar"></div></div>
     </div>
 </div>
 
-<!-- PANTALLA 1: BLOQUEO DE INSTALACIÓN CORREGIDO -->
-<div id="installerScreen">
-    <div class="welcome-card">
-        <svg class="space-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="42" stroke="#00bcff" stroke-width="2" stroke-dasharray="12 6"/>
-            <circle cx="50" cy="50" r="22" fill="#0055ff"/>
-            <path d="M18 50 C 18 18, 82 18, 82 50 C 82 82, 18 82, 18 50" stroke="#ff6a00" stroke-width="3" stroke-linecap="round"/>
-        </svg>
-        <h2>STELAR MACRO</h2>
-        <p>Para activar las funciones avanzadas añade la app a tu pantalla de inicio usando Chrome.</p>
-        <div class="btn-group">
-            <button class="giant-btn" id="realInstallBtn">INSTALAR AHORA</button>
-            <button class="skip-btn" onclick="skipInstallation()">SALTAR E INICIAR JUEGO</button>
-        </div>
-    </div>
-</div>
-
-<!-- PANTALLA 2: CONTROL DE PERMISOS -->
-<div id="permissionScreen">
-    <div class="welcome-card">
-        <h2 style="color: #ff6a00;">PERMISO REQUERIDO</h2>
-        <p>Para dibujar el widget flotante encima de otros juegos como Roblox y simular tus macros, activa los permisos de superposición táctil.</p>
-        <button class="perm-btn" onclick="grantPermissions()">PERMITIR ACCESO</button>
-    </div>
-</div>
-
-<!-- PANTALLA 3: APLICACIÓN PRINCIPAL -->
+<!-- INTERFAZ PRINCIPAL -->
 <div class="app-shell">
     <div class="navbar">
-        <h1>🌌 STELAR MACRO</h1>
+        <h1>🌌 STELAR PRO</h1>
         <div class="nav-controls">
-            <button class="nav-btn btn-purple" onclick="toggleShop()">🛒 TIENDA</button>
-            <button class="nav-btn btn-red" onclick="toggleSolarSmash()">🪐 SMASH</button>
+            <button class="nav-btn btn-purple" onclick="toggleAI()">🧠 MODO IA</button>
+            <button class="nav-btn btn-red" onclick="toggleRecordMode()">🔴 GRABAR</button>
         </div>
     </div>
 
-    <div class="workspace" id="gameArea">
+    <div class="workspace" id="gameArea" onclick="registerRecordTap(event)">
         <canvas class="starfield" id="starfieldCanvas"></canvas>
 
-        <!-- Tres pestañas espaciales de la Foto 1 -->
-        <div class="space-features">
-            <button class="space-tab-btn" onclick="toggleSpacePanel('starMap')">✨ STAR MAP</button>
-            <button class="space-tab-btn" onclick="toggleSpacePanel('nebulae')">🌌 NEBULAE VIEW</button>
-            <button class="space-tab-btn" onclick="toggleSpacePanel('planetary')">🪐 PLANETARY</button>
-        </div>
-
-        <div class="space-panel" id="panel-starMap">
-            <strong>STAR MAP v1.2:</strong> Escaneo del sector estelar Alpha-Centauri finalizado. Coordenadas fijas listas para anclaje de balizas de macro.
-        </div>
-        <div class="space-panel" id="panel-nebulae">
-            <strong>NEBULAE VIEW:</strong> Filtro de contraste activado. Detección de polvo cósmico y restos gaseosos de supernovas en un rango de 4 años luz.
-        </div>
-        <div class="space-panel" id="panel-planetary">
-            <strong>PLANETARY GUIDE:</strong> Objetivo gravitacional localizado: HD 189733b. Vientos de silicato y temperatura de 930°C.
-        </div>
-
         <!-- MODO SOLAR SMASH -->
-        <div class="solar-smash-container" id="solarSmashMode">
+        <div class="solar-smash-container">
             <div class="planet" id="gamePlanet" onclick="damagePlanet(event)">
                 <div class="resource-counter" id="dustCoins">Polvo Estelar: 0</div>
                 <div class="planet-health" id="planetHP">HP: 1000 / 1000</div>
             </div>
         </div>
 
-        <!-- MODO TIENDA DE MERCANCÍAS ESPACIALES -->
-        <div class="shop-container" id="shopMode">
-            <div class="shop-header">
-                <span class="shop-title">MERCANCÍAS CÓSMICAS</span>
-                <span id="shopDustCoins" style="color: #00ffaa; font-weight: bold; font-size: 13px;">Polvo: 0</span>
-            </div>
-            <div class="cargo-list">
-                <div class="cargo-item">
-                    <div class="cargo-info">
-                        <h3>Láser de Plasma (+25 Daño)</h3>
-                        <p>Incrementa el poder destructivo de tus macros.</p>
-                    </div>
-                    <button class="cargo-buy-btn" id="buyLaserBtn" onclick="buyCargo('laser', 150)">150 Polvo</button>
-                </div>
-                <div class="cargo-item">
-                    <div class="cargo-info">
-                        <h3>Sonda de Antimateria (+10 dps)</h3>
-                        <p>Daña planetas automáticamente segundo a segundo.</p>
-                    </div>
-                    <button class="cargo-buy-btn" id="buyProbeBtn" onclick="buyCargo('probe', 350)">350 Polvo</button>
-                </div>
-                <div class="cargo-item">
-                    <div class="cargo-info">
-                        <h3>Escudo de Vacío (X1.5 Recursos)</h3>
-                        <p>Multiplica permanentemente la obtención de polvo.</p>
-                    </div>
-                    <button class="cargo-buy-btn" id="buyShieldBtn" onclick="buyCargo('shield', 600)">600 Polvo</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- WIDGET FLOTANTE ARRSTRABLE -->
+        <!-- WIDGET INTEGRADO MULTIFUNCIÓN -->
         <div class="floating-widget" id="widgetPanel">
-            <button class="widget-btn btn-move-handle" id="dragHandle">☰</button>
-            <button class="widget-btn btn-blue-play" onclick="playMacro()">▶️</button>
-            <button class="widget-btn btn-green-add" onclick="addNewTargetNode()">➕</button>
-            <button class="widget-btn btn-orange-repeat" onclick="toggleLoopMode()">🔁</button>
-            <button class="widget-btn btn-grey-settings" onclick="clearAllNodes()">🗑️</button>
+            <button class="widget-btn btn-handle" id="dragHandle">☰</button>
+            <button class="widget-btn btn-play" onclick="playMacro()" id="btnPlay">▶️</button>
+            <button class="widget-btn btn-add" onclick="addNewTargetNode()">➕</button>
+            <button class="widget-btn btn-record" onclick="toggleRecordMode()" id="btnRecord">R</button>
+            <button class="widget-btn btn-ai" onclick="toggleAI()" id="btnAI">AI</button>
+            <button class="widget-btn btn-clear" onclick="clearAllNodes()">🗑️</button>
         </div>
     </div>
 
-    <div class="console-box" id="terminalLogs">> Consola orbital cargada con éxito. Listo para usar.</div>
+    <div class="console-box" id="terminalLogs">> Terminal de Órbita lista. Graba o usa el modo IA dentro de la app.</div>
 </div>
 
 <script>
-    // --- ELEMENTOS ---
     const loader = document.getElementById('loaderScreen');
-    const installer = document.getElementById('installerScreen');
-    const permissions = document.getElementById('permissionScreen');
-    const btnInstall = document.getElementById('realInstallBtn');
     const area = document.getElementById('gameArea');
     const logs = document.getElementById('terminalLogs');
     const widget = document.getElementById('widgetPanel');
     const dragHandle = document.getElementById('dragHandle');
-    const solarSmash = document.getElementById('solarSmashMode');
-    const shopMode = document.getElementById('shopMode');
     const planetHPLabel = document.getElementById('planetHP');
     const dustLabel = document.getElementById('dustCoins');
-    const shopDustLabel = document.getElementById('shopDustCoins');
     const progressBar = document.getElementById('loadProgressBar');
     const statusText = document.getElementById('loaderStatusText');
 
-    let deferredPrompt;
     let registeredNodes = [];
-    let isLooping = false;
+    let isPlaying = false;
+    let isRecording = false;
+    let isAIMode = false;
+    let recordedClicks = [];
     
     let planetHP = 1000;
     let dustCoins = 0;
-    let clickDamage = 40;
-    let autoDPS = 0;
-    let coinMultiplier = 1;
 
     function printLog(text) {
         logs.innerHTML += `<br>> ${text}`;
         logs.scrollTop = logs.scrollHeight;
     }
 
-    // --- PROTOGEN ADORABLE SITTING PIXEL ART (CORREGIDO) ---
+    // --- MEJORA DEL MODELO PROTOGEN PERSONALIZADO (ZORRO ROJO/DORADO) ---
     const protoCanvas = document.getElementById('protogenCanvas');
     const protoCtx = protoCanvas.getContext('2d');
     let protoFrame = 0;
 
-    function drawPixelRect(x, y, w, h, color) {
+    const C_RED = "#B23B19";     // Rojo base pelaje
+    const C_ORANGE = "#E36F26";  // Naranja brillante transiciones
+    const C_GOLD = "#F9B233";    // Dorado brillante (visor, orejas, detalles)
+    const C_DARK = "#1C1B29";    // Azul oscuro casi negro (visor y partes oscuras)
+    const C_GREY = "#2C3E50";    // Placas de armadura
+    const C_FRAME = "#8A95A5";   // Marco del visor gris metálico
+
+    function drawPixel(x, y, w, h, color) {
         protoCtx.fillStyle = color;
         protoCtx.fillRect(x, y, w, h);
     }
@@ -287,259 +158,254 @@
         protoCtx.clearRect(0, 0, 64, 64);
         protoFrame++;
 
-        // Movimientos sutiles de animación sin oscilaciones sugerentes
-        const earTwitch = Math.sin(protoFrame * 0.1) * 1.0;
-        const tailWag = Math.sin(protoFrame * 0.18) * 3; // Movimiento suave solo en la punta de la cola
+        // Movimiento de respiración para todo el cuerpo
+        const breathY = Math.sin(protoFrame * 0.08) * 0.8;
 
-        // 1. COLA DE PROTOGEN EN ALTO (Estilo perrito/ardilla tierno, curvada arriba)
-        // Base de la cola (fija en la espalda baja)
-        drawPixelRect(18, 40, 5, 5, "#2e3440");
-        drawPixelRect(15, 36, 5, 5, "#2e3440");
-        // Parte media curvada hacia arriba
-        drawPixelRect(13, 31, 5, 6, "#3b4252");
-        // Punta brillante de la cola que se menea tiernamente de izquierda a derecha
-        const tx = 11 + tailWag;
-        drawPixelRect(tx, 26, 6, 6, "#00bcff");
-        drawPixelRect(tx + 2, 28, 2, 2, "#ffffff"); // Brillo interior
+        // 1. Gran cola/ala oscura detrás (a la izquierda)
+        drawPixel(8, 12 + breathY, 8, 38, C_DARK);
+        drawPixel(16, 10 + breathY, 2, 40, C_GOLD); // Borde dorado de la cola
 
-        // 2. CUERPO CHIBI SENTADO (Fijo, sin cabeceos raros)
-        drawPixelRect(24, 34, 16, 16, "#2e3440"); // Tronco/cuerpo
-        drawPixelRect(22, 44, 6, 8, "#3b4252");  // Pata trasera apoyada
-        drawPixelRect(36, 44, 6, 8, "#3b4252");  // Pata delantera apoyada
-        drawPixelRect(28, 38, 8, 8, "#4c566a");  // Placa del pecho
+        // 2. Orejas Grandes (Estilo Zorro)
+        // Oreja Izquierda
+        drawPixel(16, 4 + breathY, 8, 18, C_RED);
+        drawPixel(18, 6 + breathY, 4, 14, C_DARK);
+        drawPixel(20, 6 + breathY, 2, 14, C_GOLD); // Brillo interno dorado
+        // Oreja Derecha
+        drawPixel(40, 4 + breathY, 8, 18, C_RED);
+        drawPixel(42, 6 + breathY, 4, 14, C_DARK);
+        drawPixel(44, 6 + breathY, 2, 14, C_GOLD); // Brillo interno dorado
 
-        // Luces led de armadura en el muslo trasero
-        drawPixelRect(24, 46, 2, 2, "#8a2be2");
+        // 3. Pelo superior (Mechones rebeldes)
+        drawPixel(26, 8 + breathY, 12, 4, C_RED);
+        drawPixel(29, 6 + breathY, 6, 2, C_RED);
 
-        // 3. OREJAS (Twitch vertical tierno)
-        // Oreja izquierda (detrás)
-        drawPixelRect(26, 12 + earTwitch, 4, 8, "#3b4252");
-        drawPixelRect(27, 14 + earTwitch, 2, 6, "#ff94b8"); // Color interno rosa
-        // Oreja derecha (delante)
-        drawPixelRect(34, 10 - earTwitch, 4, 10, "#2e3440");
-        drawPixelRect(35, 12 - earTwitch, 2, 8, "#00bcff"); // Línea de neón azul
+        // 4. Mejillas esponjosas a los lados del rostro
+        drawPixel(14, 25 + breathY, 6, 10, C_RED);
+        drawPixel(44, 25 + breathY, 6, 10, C_RED);
+        drawPixel(16, 27 + breathY, 4, 6, C_ORANGE);
+        drawPixel(44, 27 + breathY, 4, 6, C_ORANGE);
 
-        // 4. CABEZA
-        drawPixelRect(28, 20, 12, 12, "#3b4252"); // Estructura de la cabeza
+        // 5. Cuello
+        drawPixel(26, 35 + breathY, 12, 6, C_RED);
 
-        // Visor curvado tierno
-        drawPixelRect(32, 22, 11, 9, "#11141a");
-        drawPixelRect(33, 21, 9, 1, "#4c566a");
+        // 6. Pecho y hombros con armadura
+        drawPixel(18, 41 + breathY, 28, 23, C_RED); // Hombros base
+        drawPixel(22, 40 + breathY, 6, 8, C_GREY);   // Hombrera Izq
+        drawPixel(36, 40 + breathY, 6, 8, C_GREY);   // Hombrera Der
+        drawPixel(24, 42 + breathY, 2, 4, C_GOLD);   // Detalle dorado hombro izq
+        drawPixel(38, 42 + breathY, 2, 4, C_GOLD);   // Detalle dorado hombro der
+        drawPixel(26, 46 + breathY, 12, 18, C_DARK); // Placa central de pecho
+        drawPixel(29, 49 + breathY, 6, 15, C_RED);   // Núcleo rojo de pecho
 
-        // 5. EXPRESIÓN LED DE FELICIDAD PURA (OwO / ^◡^ Estilo pixel)
-        // Ojo izquierdo (^) y ojo derecho (^)
-        drawPixelRect(35, 24, 1, 2, "#00bcff");
-        drawPixelRect(36, 23, 1, 1, "#00bcff");
-        drawPixelRect(37, 24, 1, 2, "#00bcff");
+        // 7. Manos/Parras abajo
+        drawPixel(6, 44, 10, 20, C_RED);
+        drawPixel(48, 44, 10, 20, C_RED);
+        drawPixel(6, 44, 10, 4, C_DARK); // Garras oscuras
+        drawPixel(48, 44, 10, 4, C_DARK);
 
-        // Boca feliz redondeada en el visor
-        drawPixelRect(39, 27, 2, 2, "#00bcff");
-        drawPixelRect(37, 28, 2, 1, "#00bcff");
+        // 8. Base Cabeza y Marco del Visor
+        drawPixel(22, 18 + breathY, 20, 19, C_RED);
+        drawPixel(20, 19 + breathY, 24, 17, C_FRAME); // Marco metálico gris
 
-        // Rubor tierno en las mejillas
-        drawPixelRect(33, 27, 2, 1, "#ff4979");
+        // 9. Pantalla del Visor (Redondeada)
+        drawPixel(22, 20 + breathY, 20, 15, C_DARK);
+        drawPixel(24, 21 + breathY, 16, 13, C_DARK);
+
+        // 10. Expresión LED Dorada (Ojos grandes y boca feliz del zorro)
+        drawPixel(24, 24 + breathY, 4, 6, C_GOLD); // Ojo Izq
+        drawPixel(36, 24 + breathY, 4, 6, C_GOLD); // Ojo Der
+        
+        drawPixel(31, 28 + breathY, 2, 2, C_GOLD); // Nariz LED
+
+        // Boca tierna W
+        drawPixel(28, 31 + breathY, 1, 2, C_GOLD);
+        drawPixel(29, 32 + breathY, 2, 1, C_GOLD);
+        drawPixel(31, 31 + breathY, 2, 1, C_GOLD);
+        drawPixel(33, 32 + breathY, 2, 1, C_GOLD);
+        drawPixel(35, 31 + breathY, 1, 2, C_GOLD);
 
         requestAnimationFrame(drawProtogen);
     }
     drawProtogen();
 
-    // --- PROGRESO DE CARGA ---
+    // --- CARGADOR DE PANTALLA ---
     let progress = 0;
-    const stages = [
-        "Iniciando Red Estelar...", 
-        "Sincronizando Órbitas Cósmicas...", 
-        "Cargando Protogen OS v4.2...", 
-        "Listo para el Despegue!"
-    ];
-
     const loadInterval = setInterval(() => {
-        progress += 2.5;
+        progress += 4;
         progressBar.style.width = `${progress}%`;
-        
-        if (progress < 30) statusText.innerText = stages[0];
-        else if (progress < 60) statusText.innerText = stages[1];
-        else if (progress < 90) statusText.innerText = stages[2];
-        else statusText.innerText = stages[3];
-
         if (progress >= 100) {
             clearInterval(loadInterval);
             loader.style.opacity = '0';
-            setTimeout(() => {
-                loader.style.display = 'none';
-                installer.style.display = 'flex';
-            }, 600);
+            setTimeout(() => loader.style.display = 'none', 600);
         }
-    }, 80);
+    }, 50);
 
-    // --- CONTROL DE INSTALACIÓN Y ACCESO DIRECTO ---
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-    });
-
-    btnInstall.addEventListener('click', async () => {
-        if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            if (outcome === 'accepted') {
-                installer.style.display = 'none';
-                permissions.style.display = 'flex';
-                printLog("Instalación completada correctamente.");
-            }
-            deferredPrompt = null;
+    // --- MODO GRABAR (RECORD MODE) ---
+    function toggleRecordMode() {
+        isRecording = !isRecording;
+        const btn = document.getElementById('btnRecord');
+        if (isRecording) {
+            recordedClicks = [];
+            btn.style.background = "#ff9f43";
+            btn.innerText = "⏺️";
+            printLog("Modo grabación ACTIVADO. Toca cualquier parte del espacio para registrar clics.");
         } else {
-            alert("Tu navegador actual no soporta la instalación directa por API. ¡No te preocupes! Usa el botón gris 'SALTAR E INICIAR JUEGO' para entrar ya mismo.");
-        }
-    });
-
-    function skipInstallation() {
-        installer.style.display = 'none';
-        permissions.style.display = 'flex';
-        printLog("Entrando al sistema saltando instalación.");
-    }
-
-    function grantPermissions() {
-        permissions.style.display = 'none';
-        printLog("Firma de seguridad autorizada. Interfaz de usuario lista.");
-    }
-
-    // --- CANVAS DE ESTRELLAS ---
-    const canvas = document.getElementById('starfieldCanvas');
-    const ctx = canvas.getContext('2d');
-    let stars = [];
-
-    function resizeCanvas() {
-        canvas.width = area.clientWidth;
-        canvas.height = area.clientHeight;
-        initStars();
-    }
-
-    function initStars() {
-        stars = [];
-        for (let i = 0; i < 70; i++) {
-            stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                size: Math.random() * 1.5 + 0.5,
-                alpha: Math.random()
-            });
+            btn.style.background = "#b23b19";
+            btn.innerText = "R";
+            printLog(`Grabación FINALIZADA. Guardados ${recordedClicks.length} clics.`);
         }
     }
 
-    function animateStars() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        stars.forEach(s => {
-            s.alpha += 0.01;
-            if (s.alpha > 1) s.alpha = 0;
-            ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
-            ctx.beginPath();
-            ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-            ctx.fill();
-        });
-        requestAnimationFrame(animateStars);
-    }
-    window.addEventListener('resize', resizeCanvas);
-    setTimeout(() => { resizeCanvas(); animateStars(); }, 300);
+    function registerRecordTap(e) {
+        if (!isRecording) return;
+        if (e.target.closest('#widgetPanel') || e.target.closest('.navbar')) return;
 
-    // --- MERCANCÍAS ESPACIALES ---
-    let shopActive = false;
-    function toggleShop() {
-        shopActive = !shopActive;
-        shopMode.style.display = shopActive ? 'flex' : 'none';
-        updateShopUI();
+        const rect = area.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        recordedClicks.push({ x, y });
+        createTempVisualNode(x, y);
+        printLog(`Punto registrado: [X:${Math.round(x)} Y:${Math.round(y)}]`);
     }
 
-    function updateShopUI() {
-        shopDustLabel.innerText = `Polvo: ${dustCoins}`;
+    function createTempVisualNode(x, y) {
+        const temp = document.createElement('div');
+        temp.className = 'click-target-node';
+        temp.style.borderColor = '#ff9f43';
+        temp.style.left = `${x}px`;
+        temp.style.top = `${y}px`;
+        temp.innerText = "R";
+        area.appendChild(temp);
+        setTimeout(() => temp.remove(), 1000);
     }
 
-    function buyCargo(item, cost) {
-        if (dustCoins < cost) {
-            alert("❌ ¡No tienes suficiente polvo estelar! Destruye planetas en Solar Smash.");
+    // --- MODO INTELIGENCIA ARTIFICIAL (AI MODE) ---
+    function toggleAI() {
+        isAIMode = !isAIMode;
+        const btn = document.getElementById('btnAI');
+        if (isAIMode) {
+            btn.style.background = "#27ae60";
+            btn.style.color = "#fff";
+            printLog("Modo IA activado. Analizando patrones espaciales...");
+            runAIScan();
+        } else {
+            btn.style.background = "#f2c94c";
+            btn.style.color = "#000";
+            printLog("Modo IA desactivado.");
+        }
+    }
+
+    async function runAIScan() {
+        while (isAIMode) {
+            const planetEl = document.getElementById('gamePlanet');
+            const pRect = planetEl.getBoundingClientRect();
+            const aRect = area.getBoundingClientRect();
+
+            const targetX = pRect.left + pRect.width / 2 - aRect.left + (Math.random() * 40 - 20);
+            const targetY = pRect.top + pRect.height / 2 - aRect.top + (Math.random() * 40 - 20);
+
+            shootLaser(targetX, targetY);
+            damagePlanet({ clientX: targetX + aRect.left, clientY: targetY + aRect.top });
+
+            await new Promise(r => setTimeout(r, 200));
+        }
+    }
+
+    // --- REPRODUCIR CLICS / MACRO GRABADO ---
+    async function playMacro() {
+        if (isPlaying) {
+            isPlaying = false;
+            document.getElementById('btnPlay').innerText = "▶️";
+            printLog("Macro pausada.");
             return;
         }
-        dustCoins -= cost;
-        updateShopUI();
-        dustLabel.innerText = `Polvo Estelar: ${dustCoins}`;
 
-        if (item === 'laser') {
-            clickDamage += 25;
-            document.getElementById('buyLaserBtn').innerText = "ADQUIRIDO";
-            document.getElementById('buyLaserBtn').disabled = true;
-            printLog("¡Mercancía Láser de Plasma comprada! Daño aumentado.");
-        } else if (item === 'probe') {
-            autoDPS += 10;
-            document.getElementById('buyProbeBtn').innerText = "ADQUIRIDO";
-            document.getElementById('buyProbeBtn').disabled = true;
-            printLog("¡Mercancía Sonda de Antimateria activada!");
-        } else if (item === 'shield') {
-            coinMultiplier = 1.5;
-            document.getElementById('buyShieldBtn').innerText = "ADQUIRIDO";
-            document.getElementById('buyShieldBtn').disabled = true;
-            printLog("¡Mercancía Escudo de Vacío equipada! X1.5 Recursos.");
+        const nodesToRun = isRecording ? recordedClicks : registeredNodes;
+        if (nodesToRun.length === 0) {
+            printLog("No hay clics grabados ni nodos creados. Usa [+] o graba con [R] primero.");
+            return;
         }
-    }
 
-    // DPS Pasivo
-    setInterval(() => {
-        if (solarSmashActive && autoDPS > 0) {
-            planetHP -= autoDPS;
-            if (planetHP <= 0) {
-                planetHP = 1000;
-                let reward = Math.floor(100 * coinMultiplier);
-                dustCoins += reward;
-                dustLabel.innerText = `Polvo Estelar: ${dustCoins}`;
+        isPlaying = true;
+        document.getElementById('btnPlay').innerText = "⏸️";
+        printLog("Iniciando ciclo de auto-clicker...");
+
+        while (isPlaying) {
+            for (let node of nodesToRun) {
+                if (!isPlaying) break;
+                shootLaser(node.x, node.y);
+                damagePlanet({ clientX: node.x + area.getBoundingClientRect().left, clientY: node.y + area.getBoundingClientRect().top });
+                await new Promise(r => setTimeout(r, 400));
             }
-            planetHPLabel.innerText = `HP: ${planetHP} / 1000`;
-        }
-    }, 1000);
-
-    // --- COORDENADAS PESTAÑAS ESPACIALES ---
-    function toggleSpacePanel(id) {
-        const panels = document.querySelectorAll('.space-panel');
-        const buttons = document.querySelectorAll('.space-tab-btn');
-        const targetPanel = document.getElementById(`panel-${id}`);
-        
-        panels.forEach(p => p.style.display = 'none');
-        buttons.forEach(b => b.classList.remove('active'));
-
-        if (targetPanel.style.display !== 'block') {
-            targetPanel.style.display = 'block';
-            event.target.classList.add('active');
-            printLog(`Mostrando datos de ${id.toUpperCase()}`);
         }
     }
 
-    // --- SOLAR SMASH ---
-    let solarSmashActive = false;
-    function toggleSolarSmash() {
-        solarSmashActive = !solarSmashActive;
-        solarSmash.style.display = solarSmashActive ? 'flex' : 'none';
-        printLog(solarSmashActive ? "Cargando simulador físico Solar Smash." : "Saliendo de Solar Smash.");
-    }
-
+    // --- COSAS BÁSICAS DEL SIMULADOR ---
     function damagePlanet(e) {
-        if (!solarSmashActive) return;
-        planetHP -= clickDamage;
+        planetHP -= 50;
         if (planetHP <= 0) {
             planetHP = 1000;
-            let reward = Math.floor(100 * coinMultiplier);
-            dustCoins += reward;
+            dustCoins += 100;
             dustLabel.innerText = `Polvo Estelar: ${dustCoins}`;
-            printLog(`💥 ¡Planeta devastado! Ganaste ${reward} de Polvo Estelar!`);
         }
         planetHPLabel.innerText = `HP: ${planetHP} / 1000`;
 
         const text = document.createElement('div');
         text.className = 'dmg-text';
-        text.innerText = `-${clickDamage}`;
-        text.style.left = `${e.clientX || e.touches[0].clientX}px`;
-        text.style.top = `${e.clientY || e.touches[0].clientY}px`;
+        text.innerText = `-50`;
+        text.style.left = `${e.clientX}px`;
+        text.style.top = `${e.clientY}px`;
         document.body.appendChild(text);
         setTimeout(() => text.remove(), 600);
     }
 
-    // --- ARRASTRE ---
+    function addNewTargetNode() {
+        const id = registeredNodes.length + 1;
+        const node = document.createElement('div');
+        node.className = 'click-target-node';
+        node.innerText = id;
+
+        const x = Math.floor(Math.random() * (area.clientWidth - 100)) + 50;
+        const y = Math.floor(Math.random() * (area.clientHeight - 180)) + 120;
+
+        node.style.left = `${x}px`;
+        node.style.top = `${y}px`;
+
+        area.appendChild(node);
+        registeredNodes.push({ element: node, x, y });
+        printLog(`Baliza de disparo registrada #${id} [X:${x} Y:${y}]`);
+    }
+
+    function shootLaser(targetX, targetY) {
+        const laser = document.createElement('div');
+        laser.className = 'laser-beam';
+        const wRect = widget.getBoundingClientRect();
+        const aRect = area.getBoundingClientRect();
+
+        const startX = wRect.left + 19 - aRect.left;
+        const startY = wRect.top + 19 - aRect.top;
+
+        const angle = Math.atan2(targetY - startY, targetX - startX);
+        const distance = Math.hypot(targetY - startY, targetX - startX);
+
+        laser.style.width = `${distance}px`;
+        laser.style.left = `${startX}px`;
+        laser.style.top = `${startY}px`;
+        laser.style.transform = `rotate(${angle}rad)`;
+
+        area.appendChild(laser);
+        setTimeout(() => { laser.style.opacity = '0'; setTimeout(() => laser.remove(), 100); }, 80);
+    }
+
+    function clearAllNodes() {
+        document.querySelectorAll('.click-target-node').forEach(n => n.remove());
+        registeredNodes = [];
+        recordedClicks = [];
+        printLog("Memoria limpia de coordenadas.");
+    }
+
+    // --- ARRASTRE DEL WIDGET ---
     let activeDrag = false;
     let currentX, currentY, initialX, initialY;
     let xOffset = 0, yOffset = 0;
@@ -562,96 +428,6 @@
     }, { passive: false });
 
     document.addEventListener('touchend', () => { activeDrag = false; });
-
-    // --- MACROS ---
-    function addNewTargetNode() {
-        const id = registeredNodes.length + 1;
-        const node = document.createElement('div');
-        node.className = 'click-target-node';
-        node.innerText = id;
-
-        const x = Math.floor(Math.random() * (area.clientWidth - 100)) + 50;
-        const y = Math.floor(Math.random() * (area.clientHeight - 180)) + 120;
-
-        node.style.left = `${x}px`;
-        node.style.top = `${y}px`;
-
-        area.appendChild(node);
-        registeredNodes.push({ element: node, x, y });
-        printLog(`Baliza de disparo registrada #${id} [X:${x} Y:${y}]`);
-    }
-
-    async function playMacro() {
-        if (registeredNodes.length === 0) {
-            printLog("Crea nodos de clic con el botón [+] antes de reproducir.");
-            return;
-        }
-
-        printLog("Iniciando secuencia de macros...");
-        do {
-            for (let node of registeredNodes) {
-                shootLaser(node.x, node.y);
-                await new Promise(r => setTimeout(r, 600));
-
-                if (solarSmashActive) {
-                    const planetEl = document.getElementById('gamePlanet');
-                    const rect = planetEl.getBoundingClientRect();
-                    const areaRect = area.getBoundingClientRect();
-                    const px = rect.left + rect.width / 2 - areaRect.left;
-                    const py = rect.top + rect.height / 2 - areaRect.top;
-
-                    const dist = Math.hypot(node.x - px, node.y - py);
-                    if (dist < 90) {
-                        damagePlanet({ clientX: rect.left + 70, clientY: rect.top + 70 });
-                    }
-                }
-            }
-        } while (isLooping);
-    }
-
-    function shootLaser(targetX, targetY) {
-        const laser = document.createElement('div');
-        laser.className = 'laser-beam';
-        
-        const widgetRect = widget.getBoundingClientRect();
-        const areaRect = area.getBoundingClientRect();
-
-        const startX = widgetRect.left + 19 - areaRect.left;
-        const startY = widgetRect.top + 19 - areaRect.top;
-
-        const angle = Math.atan2(targetY - startY, targetX - startX);
-        const distance = Math.hypot(targetY - startY, targetX - startX);
-
-        laser.style.width = `${distance}px`;
-        laser.style.left = `${startX}px`;
-        laser.style.top = `${startY}px`;
-        laser.style.transform = `rotate(${angle}rad)`;
-
-        area.appendChild(laser);
-        setTimeout(() => { laser.style.opacity = '0'; setTimeout(() => laser.remove(), 150); }, 100);
-    }
-
-    function toggleLoopMode() {
-        isLooping = !isLooping;
-        printLog(isLooping ? "Modo repetición activado." : "Repetición desactivada.");
-    }
-
-    function clearAllNodes() {
-        document.querySelectorAll('.click-target-node').forEach(n => n.remove());
-        registeredNodes = [];
-        printLog("Nodos eliminados de memoria.");
-    }
-
-    // --- SERVICE WORKER ---
-    if ('serviceWorker' in navigator) {
-        const swText = `
-            self.addEventListener('install', (e) => self.skipWaiting());
-            self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
-            self.addEventListener('fetch', (e) => e.respondWith(fetch(e.request).catch(() => new Response("Offline"))));
-        `;
-        const blob = new Blob([swText], { type: 'application/javascript' });
-        navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
-    }
 </script>
 </body>
 </html>
