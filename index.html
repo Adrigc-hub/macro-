@@ -2,119 +2,381 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Roblox Auto Clicker & Macro PWA</title>
-    <!-- Configuración Manifest para que Android la detecte como una App instalable -->
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkF1dG8gQ2xpY2tlciBNYWNybyIsCiAgInNob3J0X25hbWUiOiAiQXV0b0NsaWNrZXIiLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzEyMTIxMiIsCiAgInRoZW1lX2NvbG9yIjogIiNlNjNjMTIiCn0=">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Stelar Macro</title>
+    <!-- MANIFEST INTEGRADO CON ICONO VECTORIAL COMPLETO DE GALAXY PARA INSTALACIÓN REAL -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlN0ZWxhciBNYWNybyIsCiAgInNob3J0X25hbWUiOiAiU3RlbGFyTWFjcm8iLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzA1MDYwZiIsCiAgInRoZW1lX2NvbG9yIjogIiMwMGFmZmYiLAogICpjb25zIjogWwogICAgewogICAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbDtiYXNlNjQsUEFqR0dsY201bFpEMGlJSFpwYm1kbFpEMGlNVEF3SUNKbWFXNWpZWFJwYjI0aUl6VXlNSGg2YUhSMGNEb3ZMMjUzZHk1M01pNXZjbWN2YzNaTmIyUjViR1VpSUg1bGMzTnBaRDBpTURBd0lESXdPVEFpSUhOMWMyVnlkRDBpTURBd0lESXdPVEFpUGp4emN6MGlZMjlrYVhSbFpEMGlMVEF3SUNKemMyVnlkRDBpTUNJZ1ptbHNiRDBpSXpBMU1EWm1JQ0FnUGp4bGRYSnVjM1I1Y0dVaUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4bVpXNWpaM2wwSUhOMWMyVnlkRDBpTUNJZ1pHOXlaVzUwUFNKalluSmxjM1JsY201bFpEMGlJSFpwYm1kbFpEMGlNVEF3SUNKbWFXNWpZWFJwYjI0aUl6VXlNSGg2YUhSMGNEb3ZMMjUzZHk1M01pNXZjbWN2YzNaTmIyUjViR1VpUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlZMmx5WTJrZ2RXNWpaM2wwSUhOMWMyVnlkRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYkc5eVpXNTBQU0pqWW5KbGMzUmxjbTVsWkQwaUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlkRzlyWlc0aUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlkRzlyWlc0aUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlZMmx5WTJrZ2RXNWpaM2wwSUhOMWMyVnlkRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYkc5eVpXNTBQU0pqWW5KbGMzUmxjbTVsWkQwaUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlkRzlyWlc0aUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlZMmx5WTJrZ2RXNWpaM2wwSUhOMWMyVnlkRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYkc5eVpXNTBQU0pqWW5KbGMzUmxjbTVsWkQwaUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlkRzlyWlc0aUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlZMmx5WTJrZ2RXNWpaM2wwSUhOMWMyVnlkRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYkc5eVpXNTBQU0pqWW5KbGMzUmxjbTVsWkQwaUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlkRzlyWlc0aUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlZMmx5WTJrZ2RXNWpaM2wwSUhOMWMyVnlkRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYkc5eVpXNTBQU0pqWW5KbGMzUmxjbTVsWkQwaUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlkRzlyWlc0aUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlZMmx5WTJrZ2RXNWpaM2wwSUhOMWMyVnlkRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYkc5eVpXNTBQU0pqWW5KbGMzUmxjbTVsWkQwaUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlkRzlyWlc0aUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlZMmx5WTJrZ2RXNWpaM2wwSUhOMWMyVnlkRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYkc5eVpXNTBQU0pqWW5KbGMzUmxjbTVsWkQwaUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlkRzlyWlc0aUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlZMmx5WTJrZ2RXNWpaM2wwSUhOMWMyVnlkRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYkc5eVpXNTBQU0pqWW5KbGMzUmxjbTVsWkQwaUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4d2VHbGpaRDBpTURBZ01EQWdNVEl3TURBZ01USXdNQ0lnYm1GdFpEMGlkRzlyWlc0aUlHWnBiVzlrWlM1dVlXMWxJQ0FnUGp4bWFXeDFhVzVvSUhOMWMyVnlkRDBpTUNJZ2NtOTBZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTVZWFIwYVc5dVBTSW9NQ0FnTUNJZ2NtOTU=",
+    "sizes": "192x192",
+    "type": "image/svg+xml",
+    "purpose": "any maskable"
+    }
+  ]
+}-->
     <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body, html { background: #121212; color: white; margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }
+        * { box-sizing: border-box; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; padding: 0; }
+        body { background: #04050e; color: #ffffff; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         
-        /* PANTALLA DE BLOQUEO OBLIGATORIO (ESTILO INSTALADOR) */
-        #installerOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1a1a1a; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
-        .install-card { background: #262626; border: 2px solid #e63c12; border-radius: 15px; padding: 30px; width: 100%; max-width: 360px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        .install-title { font-size: 22px; font-weight: bold; color: #e63c12; margin-bottom: 10px; }
-        .install-desc { color: #aaa; font-size: 13px; margin-bottom: 25px; line-height: 1.5; }
-        #btnInstallGiant { background: #00cc66; color: white; border: none; width: 100%; padding: 18px; font-size: 16px; font-weight: bold; border-radius: 10px; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 15px rgba(0,204,102,0.4); transition: 0.2s; }
-        #btnInstallGiant:active { transform: scale(0.95); }
+        /* PANTALLA DE CARGA CON PROTOGEN PIXEL ART */
+        #loaderScreen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle, #090c1f 0%, #020307 100%);
+            z-index: 20000; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; transition: opacity 0.6s ease-in-out;
+        }
+        .protogen-box {
+            display: flex; flex-direction: column; align-items: center; gap: 15px;
+        }
+        #protogenCanvas {
+            width: 192px; height: 192px;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+        .loading-bar-container {
+            width: 240px; height: 6px; background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px; overflow: hidden; margin-top: 10px; border: 1px solid rgba(0, 188, 255, 0.2);
+        }
+        .loading-bar {
+            width: 0%; height: 100%; background: linear-gradient(90deg, #00bcff, #8a2be2);
+            box-shadow: 0 0 8px #00bcff; transition: width 0.1s linear;
+        }
+        .loading-text {
+            color: #00bcff; font-size: 11px; font-weight: bold; letter-spacing: 2px;
+            text-transform: uppercase; text-shadow: 0 0 5px rgba(0, 188, 255, 0.5);
+        }
 
-        /* PANTALLA DE CONFIGURACIÓN DE PERMISOS */
-        #permissionsOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1a1a1a; z-index: 9998; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
-        .permission-btn { background: #e63c12; color: white; border: none; width: 100%; max-width: 320px; padding: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 20px; }
+        /* INTERFAZ DE BLOQUEO INSTALADOR REAL */
+        #installerScreen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: radial-gradient(circle, #090e24 0%, #030409 100%); z-index: 10000; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 25px; }
+        .space-logo { width: 90px; height: 90px; margin-bottom: 25px; animation: planetOrbit 8s linear infinite; }
+        @keyframes planetOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .welcome-card { background: rgba(10, 14, 32, 0.95); border: 2px solid #00bcff; border-radius: 20px; padding: 35px; text-align: center; max-width: 390px; box-shadow: 0 0 40px rgba(0, 188, 255, 0.35); }
+        .welcome-card h2 { color: #00bcff; font-size: 26px; margin-bottom: 12px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(0,188,255,0.5); }
+        .welcome-card p { font-size: 13.5px; color: #9ab0e5; line-height: 1.6; margin-bottom: 30px; }
+        .giant-btn { background: linear-gradient(135deg, #00bcff 0%, #0055ff 100%); color: white; border: none; padding: 18px; width: 100%; border-radius: 10px; font-weight: 800; font-size: 15px; letter-spacing: 1.5px; cursor: pointer; box-shadow: 0 6px 20px rgba(0, 188, 255, 0.4); transition: 0.3s; }
+        .giant-btn:active { transform: scale(0.96); }
 
-        /* CONTENIDO PRINCIPAL (SIMULADOR) */
-        .app-container { display: flex; flex-direction: column; height: 100vh; padding: 15px; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .header h2 { margin: 0; font-size: 18px; color: #e63c12; }
-        
-        /* Simulador de pantalla de Roblox */
-        .game-viewport { flex-grow: 1; background: #08080a; border: 2px dashed #444; border-radius: 12px; position: relative; overflow: hidden; }
-        .game-bg-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #222; font-size: 24px; font-weight: bold; text-transform: uppercase; pointer-events: none; }
+        /* PANTALLA OBLIGATORIA DE PERMISOS DE SISTEMA */
+        #permissionScreen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #030409; z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        .perm-btn { background: #ff6a00; border: none; border-bottom: 4px solid #cc4400; width: 100%; max-width: 320px; padding: 16px; font-weight: bold; font-size: 14px; border-radius: 8px; cursor: pointer; color: white; margin-top: 20px; transition: 0.2s; }
+        .perm-btn:active { transform: scale(0.97); border-bottom-width: 1px; margin-top: 23px; }
 
-        /* WIDGET FLOTANTE REALISTA (COMO TU CAPTURA) */
-        .floating-widget { position: absolute; top: 40px; left: 15px; background: rgba(30, 30, 35, 0.95); border: 1px solid #444; border-radius: 20px; padding: 8px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); z-index: 100; touch-action: none; }
-        .widget-btn { width: 36px; height: 36px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; color: white; transition: 0.2s; }
+        /* CONTENEDOR PRINCIPAL - STELAR MACRO */
+        .app-shell { display: flex; flex-direction: column; height: 100%; }
+        .navbar { height: 60px; background: rgba(8, 11, 26, 0.95); display: flex; align-items: center; justify-content: space-between; padding: 0 15px; border-bottom: 1px solid #162044; }
+        .navbar h1 { font-size: 18px; color: #00bcff; font-weight: 900; letter-spacing: 1.5px; text-shadow: 0 0 8px rgba(0,188,255,0.3); }
+        .nav-controls { display: flex; gap: 8px; }
+        .nav-btn { border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; font-size: 11px; color: white; cursor: pointer; }
+        .btn-red { background: #ff2a2a; box-shadow: 0 0 8px rgba(255,42,42,0.4); }
+        .btn-purple { background: #8a2be2; box-shadow: 0 0 8px rgba(138,43,226,0.4); }
+
+        /* Canvas de estrellas de fondo */
+        .workspace { flex-grow: 1; background: #020307; position: relative; overflow: hidden; }
+        .starfield { position: absolute; top:0; left:0; width:100%; height:100%; pointer-events: none; }
+
+        /* Pestañas de Características de la Foto 1 */
+        .space-features { position: absolute; top: 15px; left: 15px; right: 15px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; z-index: 50; }
+        .space-tab-btn { background: rgba(12, 16, 38, 0.9); border: 1px solid #182754; padding: 12px 6px; border-radius: 8px; font-size: 10px; font-weight: bold; color: #9ab0e5; cursor: pointer; text-align: center; text-transform: uppercase; letter-spacing: 0.5px; transition: 0.2s; }
+        .space-tab-btn.active { border-color: #00bcff; color: #00bcff; background: rgba(0, 188, 255, 0.15); box-shadow: 0 0 12px rgba(0,188,255,0.2); }
+
+        /* Paneles dinámicos */
+        .space-panel { position: absolute; top: 70px; left: 15px; right: 15px; background: rgba(6, 8, 20, 0.95); border: 1px solid #19264f; border-radius: 10px; padding: 14px; font-size: 11.5px; display: none; z-index: 45; color: #b1c4f0; line-height: 1.5; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+
+        /* MODO SOLAR SMASH */
+        .solar-smash-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; display: none; align-items: center; justify-content: center; pointer-events: none; }
+        .planet { width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #2a6ac5, #00bfff, #020307); box-shadow: 0 0 40px rgba(0, 191, 255, 0.5); position: relative; cursor: pointer; pointer-events: auto; transition: transform 0.1s; }
+        .planet:active { transform: scale(0.95); }
+        .planet-health { position: absolute; top: -35px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: bold; border: 1px solid #ff3333; color: #ff3333; width: max-content; letter-spacing: 0.5px; }
+        .resource-counter { position: absolute; top: -60px; left: 50%; transform: translateX(-50%); color: #00ffaa; font-weight: bold; font-size: 11px; text-shadow: 0 0 5px rgba(0,255,170,0.5); }
+        .dmg-text { position: absolute; font-weight: 900; font-size: 24px; color: #ff6a00; pointer-events: none; animation: floatAndFade 0.6s ease-out forwards; text-shadow: 0 0 8px #000; }
+        @keyframes floatAndFade { 0% { transform: translateY(0) scale(0.8); opacity: 1; } 100% { transform: translateY(-90px) scale(1.3); opacity: 0; } }
+
+        /* MODO MERCANCÍAS ESPACIALES */
+        .shop-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; background: rgba(3, 4, 9, 0.95); display: none; flex-direction: column; padding: 20px; padding-top: 80px; z-index: 60; box-sizing: border-box; overflow-y: auto; }
+        .shop-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #1a2244; padding-bottom: 10px; }
+        .shop-title { font-size: 18px; color: #8a2be2; font-weight: bold; letter-spacing: 1px; }
+        .cargo-list { display: flex; flex-direction: column; gap: 10px; }
+        .cargo-item { background: rgba(14, 18, 41, 0.8); border: 1px solid #233166; border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .cargo-info h3 { font-size: 13px; color: #00bcff; margin-bottom: 4px; }
+        .cargo-info p { font-size: 10.5px; color: #8fa0dd; }
+        .cargo-buy-btn { background: #8a2be2; border: none; color: white; padding: 8px 12px; border-radius: 6px; font-weight: bold; font-size: 11px; cursor: pointer; transition: 0.2s; }
+        .cargo-buy-btn:active { transform: scale(0.95); }
+
+        /* WIDGET FLOTANTE ARRSTRABLE */
+        .floating-widget { position: absolute; top: 130px; left: 15px; background: rgba(8, 11, 26, 0.95); border: 1px solid #00bcff; border-radius: 20px; padding: 8px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 0 20px rgba(0, 188, 255, 0.25); z-index: 100; touch-action: none; }
+        .widget-btn { width: 38px; height: 38px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; color: white; transition: 0.2s; }
         .btn-blue-play { background: #2f80ed; }
         .btn-green-add { background: #27ae60; }
         .btn-orange-repeat { background: #f2994a; }
         .btn-grey-settings { background: #4f4f4f; }
-        .btn-move-handle { background: #333; cursor: move; }
+        .btn-move-handle { background: #162044; cursor: move; font-size: 14px; }
 
-        /* Marcadores numéricos de clicks (1, 2, 3 de tu captura) */
-        .click-target-node { position: absolute; width: 32px; height: 32px; border-radius: 50%; border: 3px solid #2f80ed; background: rgba(47, 128, 237, 0.3); color: #f2994a; font-weight: bold; display: flex; align-items: center; justify-content: center; font-size: 14px; transform: translate(-50%, -50%); pointer-events: none; }
-        
-        .pulse-effect { position: absolute; width: 10px; height: 10px; background: #00ffcc; border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; animation: ping 0.4s ease-out; }
-        @keyframes ping { to { width: 45px; height: 45px; opacity: 0; } }
+        /* Elementos del Macro */
+        .click-target-node { position: absolute; width: 34px; height: 34px; border-radius: 50%; border: 3px solid #00bcff; background: rgba(0, 188, 255, 0.2); color: #fff; font-weight: bold; display: flex; align-items: center; justify-content: center; font-size: 14px; transform: translate(-50%, -50%); pointer-events: none; box-shadow: 0 0 12px #00bcff; }
+        .laser-beam { position: absolute; height: 3px; background: #00ffcc; transform-origin: top left; pointer-events: none; z-index: 90; box-shadow: 0 0 12px #00ffcc; transition: opacity 0.15s; }
 
-        /* Panel de Logs */
-        .console-box { height: 80px; background: #000; color: #00ff66; font-family: monospace; font-size: 11px; padding: 8px; overflow-y: auto; border-radius: 6px; margin-top: 10px; border: 1px solid #222; }
+        /* Consola de logs */
+        .console-box { height: 90px; background: #010205; color: #00ffaa; font-family: 'Courier New', Courier, monospace; font-size: 11px; padding: 10px; overflow-y: auto; border-top: 1px solid #141b35; }
     </style>
 </head>
 <body>
 
-<!-- PANTALLA 1: BLOQUEO DE INSTALACIÓN -->
-<div id="installerOverlay">
-    <div class="install-card">
-        <div class="install-title">INSTALACIÓN REQUERIDA</div>
-        <p class="install-desc">Este Auto Clicker necesita ejecutarse fuera del navegador de internet. Pulsa el botón de abajo para instalar el archivo APK/PWA en tu móvil de forma inmediata.</p>
-        <button id="btnInstallGiant">📲 Instalar como APK</button>
+<!-- PANTALLA DE CARGA CON PROTOGEN PIXEL ART REAL -->
+<div id="loaderScreen">
+    <div class="protogen-box">
+        <canvas id="protogenCanvas" width="64" height="64"></canvas>
+        <span class="loading-text" id="loaderStatusText">Iniciando Red Estelar...</span>
+        <div class="loading-bar-container">
+            <div class="loading-bar" id="loadProgressBar"></div>
+        </div>
+    </div>
+</div>
+
+<!-- PANTALLA 1: BLOQUEO DE INSTALACIÓN REAL -->
+<div id="installerScreen">
+    <div class="welcome-card">
+        <svg class="space-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="42" stroke="#00bcff" stroke-width="2" stroke-dasharray="12 6"/>
+            <circle cx="50" cy="50" r="22" fill="#0055ff"/>
+            <path d="M18 50 C 18 18, 82 18, 82 50 C 82 82, 18 82, 18 50" stroke="#ff6a00" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <h2>STELAR MACRO</h2>
+        <p>Para activar las funciones avanzadas y el motor offline, debes añadir la aplicación al sistema de manera independiente en tu pantalla de inicio.</p>
+        <button class="giant-btn" id="realInstallBtn">INSTALAR AHORA</button>
     </div>
 </div>
 
 <!-- PANTALLA 2: CONTROL DE PERMISOS -->
-<div id="permissionsOverlay">
-    <div class="install-card">
-        <div class="install-title">PERMISOS DEL SISTEMA</div>
-        <p class="install-desc">Para poder simular gestos y dibujar el panel flotante encima de Roblox, debes activar los permisos de Superposición de Pantalla.</p>
-        <button class="permission-btn" onclick="grantPermissions()">🔓 OTORGAR PERMISOS</button>
+<div id="permissionScreen">
+    <div class="welcome-card">
+        <h2 style="color: #ff6a00;">PERMISO REQUERIDO</h2>
+        <p>Para dibujar el widget flotante encima de otros juegos como Roblox y simular tus macros, activa los permisos de superposición táctil.</p>
+        <button class="perm-btn" onclick="grantPermissions()">PERMITIR ACCESO</button>
     </div>
 </div>
 
-<!-- PANTALLA 3: INTERFAZ DE USUARIO PRINCIPAL -->
-<div class="app-container">
-    <div class="header">
-        <h2>Roblox Macro Clicker</h2>
-        <span style="font-size: 11px; color: #888;">MODO INTEGRADO</span>
+<!-- PANTALLA 3: APLICACIÓN PRINCIPAL -->
+<div class="app-shell">
+    <div class="navbar">
+        <h1>🌌 STELAR MACRO</h1>
+        <div class="nav-controls">
+            <button class="nav-btn btn-purple" onclick="toggleShop()">🛒 TIENDA</button>
+            <button class="nav-btn btn-red" onclick="toggleSolarSmash()">🪐 SMASH</button>
+        </div>
     </div>
 
-    <!-- Simulación de la pantalla de juego -->
-    <div class="game-viewport" id="gameArea">
-        <div class="game-bg-text">Pantalla de Roblox</div>
-        
-        <!-- WIDGET FLOTANTE REALISTA (Símil de tu captura) -->
+    <div class="workspace" id="gameArea">
+        <canvas class="starfield" id="starfieldCanvas"></canvas>
+
+        <!-- Tres pestañas espaciales de la Foto 1 -->
+        <div class="space-features">
+            <button class="space-tab-btn" onclick="toggleSpacePanel('starMap')">✨ STAR MAP</button>
+            <button class="space-tab-btn" onclick="toggleSpacePanel('nebulae')">🌌 NEBULAE VIEW</button>
+            <button class="space-tab-btn" onclick="toggleSpacePanel('planetary')">🪐 PLANETARY</button>
+        </div>
+
+        <div class="space-panel" id="panel-starMap">
+            <strong>STAR MAP v1.2:</strong> Escaneo del sector estelar Alpha-Centauri finalizado. Coordenadas fijas listas para anclaje de balizas de macro.
+        </div>
+        <div class="space-panel" id="panel-nebulae">
+            <strong>NEBULAE VIEW:</strong> Filtro de contraste activado. Detección de polvo cósmico y restos gaseosos de supernovas en un rango de 4 años luz.
+        </div>
+        <div class="space-panel" id="panel-planetary">
+            <strong>PLANETARY GUIDE:</strong> Objetivo gravitacional localizado: HD 189733b. Vientos de silicato y temperatura de 930°C.
+        </div>
+
+        <!-- MODO SOLAR SMASH -->
+        <div class="solar-smash-container" id="solarSmashMode">
+            <div class="planet" id="gamePlanet" onclick="damagePlanet(event)">
+                <div class="resource-counter" id="dustCoins">Polvo Estelar: 0</div>
+                <div class="planet-health" id="planetHP">HP: 1000 / 1000</div>
+            </div>
+        </div>
+
+        <!-- MODO TIENDA DE MERCANCÍAS ESPACIALES -->
+        <div class="shop-container" id="shopMode">
+            <div class="shop-header">
+                <span class="shop-title">MERCANCÍAS CÓSMICAS</span>
+                <span id="shopDustCoins" style="color: #00ffaa; font-weight: bold; font-size: 13px;">Polvo: 0</span>
+            </div>
+            <div class="cargo-list">
+                <div class="cargo-item">
+                    <div class="cargo-info">
+                        <h3>Láser de Plasma (+25 Daño)</h3>
+                        <p>Incrementa el poder destructivo de tus macros.</p>
+                    </div>
+                    <button class="cargo-buy-btn" id="buyLaserBtn" onclick="buyCargo('laser', 150)">150 Polvo</button>
+                </div>
+                <div class="cargo-item">
+                    <div class="cargo-info">
+                        <h3>Sonda de Antimateria (+10 dps)</h3>
+                        <p>Daña planetas automáticamente segundo a segundo.</p>
+                    </div>
+                    <button class="cargo-buy-btn" id="buyProbeBtn" onclick="buyCargo('probe', 350)">350 Polvo</button>
+                </div>
+                <div class="cargo-item">
+                    <div class="cargo-info">
+                        <h3>Escudo de Vacío (X1.5 Recursos)</h3>
+                        <p>Multiplica permanentemente la obtención de polvo.</p>
+                    </div>
+                    <button class="cargo-buy-btn" id="buyShieldBtn" onclick="buyCargo('shield', 600)">600 Polvo</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- WIDGET FLOTANTE ARRSTRABLE -->
         <div class="floating-widget" id="widgetPanel">
             <button class="widget-btn btn-move-handle" id="dragHandle">☰</button>
-            <button class="widget-btn btn-blue-play" onclick="executeMacroBucle()">▶️</button>
+            <button class="widget-btn btn-blue-play" onclick="playMacro()">▶️</button>
             <button class="widget-btn btn-green-add" onclick="addNewTargetNode()">➕</button>
-            <button class="widget-btn btn-orange-repeat" onclick="toggleSmartClaim()">🔁</button>
+            <button class="widget-btn btn-orange-repeat" onclick="toggleLoopMode()">🔁</button>
             <button class="widget-btn btn-grey-settings" onclick="clearAllNodes()">🗑️</button>
         </div>
     </div>
 
-    <div class="console-box" id="terminalLogs">> Consola de control lista.</div>
+    <div class="console-box" id="terminalLogs">> Consola orbital cargada con éxito. Listo para usar.</div>
 </div>
 
 <script>
-    // --- VARIABLES Y SELECTORES GLOBALES ---
-    const installer = document.getElementById('installerOverlay');
-    const permissions = document.getElementById('permissionsOverlay');
-    const btnInstall = document.getElementById('btnInstallGiant');
+    // --- ELEMENTOS E INSTALACIÓN ---
+    const loader = document.getElementById('loaderScreen');
+    const installer = document.getElementById('installerScreen');
+    const permissions = document.getElementById('permissionScreen');
+    const btnInstall = document.getElementById('realInstallBtn');
     const area = document.getElementById('gameArea');
     const logs = document.getElementById('terminalLogs');
     const widget = document.getElementById('widgetPanel');
     const dragHandle = document.getElementById('dragHandle');
+    const solarSmash = document.getElementById('solarSmashMode');
+    const shopMode = document.getElementById('shopMode');
+    const planetHPLabel = document.getElementById('planetHP');
+    const dustLabel = document.getElementById('dustCoins');
+    const shopDustLabel = document.getElementById('shopDustCoins');
+    const progressBar = document.getElementById('loadProgressBar');
+    const statusText = document.getElementById('loaderStatusText');
 
     let deferredPrompt;
     let registeredNodes = [];
-    let isSmartClaimActive = false;
-    let smartLoopInterval = null;
+    let isLooping = false;
+    
+    // Variables de progresión y mercancías
+    let planetHP = 1000;
+    let dustCoins = 0;
+    let clickDamage = 40;
+    let autoDPS = 0;
+    let coinMultiplier = 1;
 
     function printLog(text) {
         logs.innerHTML += `<br>> ${text}`;
         logs.scrollTop = logs.scrollHeight;
     }
 
-    // --- MANEJO DEL MOTOR DE INSTALACIÓN ---
+    // --- RENDERIZADOR PIXEL ART: PROTOGEN ANIMADO ---
+    const protoCanvas = document.getElementById('protogenCanvas');
+    const protoCtx = protoCanvas.getContext('2d');
+    let protoFrame = 0;
+
+    function drawPixelRect(x, y, w, h, color) {
+        protoCtx.fillStyle = color;
+        protoCtx.fillRect(x, y, w, h);
+    }
+
+    function drawProtogen() {
+        protoCtx.clearRect(0, 0, 64, 64);
+        protoFrame++;
+
+        // Fórmulas matemáticas para los ciclos de animación (respiración y cola)
+        const breathe = Math.sin(protoFrame * 0.08) * 1.2;
+        const tailWag = Math.sin(protoFrame * 0.25) * 5;
+
+        // 1. COLA DE PROTOGEN (Pixel Art Wagging)
+        const tx = 14 + tailWag;
+        const ty = 34 + breathe * 0.5;
+        // Base de la cola
+        drawPixelRect(tx, ty, 6, 6, "#2e3440");
+        drawPixelRect(tx - 2, ty + 2, 4, 6, "#3b4252");
+        // Punta brillante de la cola (Neon Azul/Cyan)
+        drawPixelRect(tx - 4, ty + 4, 3, 3, "#00bcff");
+        drawPixelRect(tx - 3, ty + 5, 1, 1, "#ffffff");
+
+        // 2. CUERPO Y ARMADURA
+        drawPixelRect(24, 32 + breathe, 16, 14, "#2e3440"); // Tronco
+        drawPixelRect(22, 35 + breathe, 4, 10, "#4c566a");  // Hombro trasero
+        drawPixelRect(38, 35 + breathe, 4, 10, "#4c566a");  // Hombro delantero
+        drawPixelRect(28, 45, 8, 4, "#1f232a");             // Patas inferiores
+
+        // Placas de energía en el pecho (Símbolo Neón)
+        drawPixelRect(31, 36 + breathe, 2, 4, "#8a2be2");
+        drawPixelRect(30, 37 + breathe, 4, 2, "#8a2be2");
+
+        // 3. OREJAS ORGÁNICAS Y MECÁNICAS
+        // Oreja Trasera (izq)
+        drawPixelRect(25, 12 + breathe * 0.8, 4, 8, "#3b4252");
+        drawPixelRect(26, 14 + breathe * 0.8, 2, 6, "#ff8080"); // Rosa interior
+        // Oreja Cibernética Delantera (der)
+        const earOffset = breathe * 0.5;
+        drawPixelRect(33, 10 + earOffset, 4, 9, "#2e3440");
+        drawPixelRect(34, 11 + earOffset, 2, 7, "#00bcff"); // Luz de neón
+
+        // 4. CABEZA DE MEGAPÍXELES
+        drawPixelRect(28, 18 + breathe, 12, 12, "#3b4252"); // Base del rostro
+
+        // Visor Robótico (Negro con borde metálico)
+        drawPixelRect(32, 20 + breathe, 11, 9, "#11141a");
+        drawPixelRect(33, 19 + breathe, 9, 1, "#4c566a");
+        drawPixelRect(33, 29 + breathe, 9, 1, "#4c566a");
+
+        // 5. EXPRESIÓN LED DE FELICIDAD COMPLETA (Neon Cyan ^◡^)
+        // Ojos en Arco Feliz (Left & Right ^)
+        drawPixelRect(35, 23 + breathe, 1, 2, "#00bcff");
+        drawPixelRect(36, 22 + breathe, 1, 1, "#00bcff");
+        drawPixelRect(37, 23 + breathe, 1, 2, "#00bcff");
+
+        // Boca / Sonrisa Robótica Súper Feliz (Curva enorme)
+        drawPixelRect(35, 27 + breathe, 1, 1, "#00bcff");
+        drawPixelRect(39, 27 + breathe, 1, 1, "#00bcff");
+        drawPixelRect(36, 28 + breathe, 3, 1, "#00bcff");
+
+        // Mejilla Ruborizada (Glow Rosa de felicidad)
+        drawPixelRect(33, 25 + breathe, 2, 2, "#ff4979");
+
+        requestAnimationFrame(drawProtogen);
+    }
+    drawProtogen();
+
+    // --- PROGRESO DE LA PANTALLA DE CARGA ---
+    let progress = 0;
+    const stages = [
+        "Iniciando Red Estelar...", 
+        "Sincronizando Órbitas Cósmicas...", 
+        "Cargando Protogen OS v4.2...", 
+        "Listo para el Despegue!"
+    ];
+
+    const loadInterval = setInterval(() => {
+        progress += 2.5;
+        progressBar.style.width = `${progress}%`;
+        
+        // Cambio de texto dinámico por fases
+        if (progress < 30) statusText.innerText = stages[0];
+        else if (progress < 60) statusText.innerText = stages[1];
+        else if (progress < 90) statusText.innerText = stages[2];
+        else statusText.innerText = stages[3];
+
+        if (progress >= 100) {
+            clearInterval(loadInterval);
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.display = 'none';
+                // Pasar a la pantalla de instalación
+                installer.style.display = 'flex';
+            }, 600);
+        }
+    }, 80);
+
+    // --- INSTALACIÓN SIN NAVEGADOR ---
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
@@ -127,16 +389,14 @@
             if (outcome === 'accepted') {
                 installer.style.display = 'none';
                 permissions.style.display = 'flex';
-                printLog("Aplicación instalada localmente.");
+                printLog("Instalación completada. Ejecutando motor de forma nativa.");
             }
             deferredPrompt = null;
         } else {
-            // Si el navegador no soporta el prompt automático, guiamos al usuario de forma manual
-            alert("Para instalar:\n1. Toca los 3 puntos de tu navegador.\n2. Selecciona 'Instalar aplicación' o 'Agregar a pantalla de inicio'.");
+            alert("Sigue estos pasos manuales para instalar sin marca del navegador:\n1. Pulsa los 3 puntos arriba a la derecha en Chrome.\n2. Pulsa en 'Instalar aplicación'.");
         }
     });
 
-    // Detectamos si el usuario ya inició desde la app instalada
     if (window.matchMedia('(display-mode: standalone)').matches) {
         installer.style.display = 'none';
         permissions.style.display = 'flex';
@@ -144,10 +404,148 @@
 
     function grantPermissions() {
         permissions.style.display = 'none';
-        printLog("Permisos de accesibilidad y dibujo otorgados con éxito.");
+        printLog("Firma de seguridad autorizada. Interfaz de usuario lista.");
     }
 
-    // --- COORDENADAS FLOTANTES Y ARRASTRE DE WIDGET ---
+    // --- RENDERIZADO DE ESTRELLAS DE FONDO POR CANVAS ---
+    const canvas = document.getElementById('starfieldCanvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resizeCanvas() {
+        canvas.width = area.clientWidth;
+        canvas.height = area.clientHeight;
+        initStars();
+    }
+
+    function initStars() {
+        stars = [];
+        for (let i = 0; i < 70; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 1.5 + 0.5,
+                alpha: Math.random()
+            });
+        }
+    }
+
+    function animateStars() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        stars.forEach(s => {
+            s.alpha += 0.01;
+            if (s.alpha > 1) s.alpha = 0;
+            ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        requestAnimationFrame(animateStars);
+    }
+    window.addEventListener('resize', resizeCanvas);
+    setTimeout(() => { resizeCanvas(); animateStars(); }, 300);
+
+    // --- SISTEMA DE GESTIÓN DE TIENDA (MERCANCÍAS) ---
+    let shopActive = false;
+    function toggleShop() {
+        shopActive = !shopActive;
+        shopMode.style.display = shopActive ? 'flex' : 'none';
+        updateShopUI();
+        printLog(shopActive ? "Abriendo listado de mercancías." : "Cerrando tienda.");
+    }
+
+    function updateShopUI() {
+        shopDustLabel.innerText = `Polvo: ${dustCoins}`;
+    }
+
+    function buyCargo(item, cost) {
+        if (dustCoins < cost) {
+            alert("❌ ¡No tienes suficiente polvo estelar! Destruye planetas usando tus macros en Solar Smash.");
+            return;
+        }
+        dustCoins -= cost;
+        updateShopUI();
+        dustLabel.innerText = `Polvo Estelar: ${dustCoins}`;
+
+        if (item === 'laser') {
+            clickDamage += 25;
+            document.getElementById('buyLaserBtn').innerText = "ADQUIRIDO";
+            document.getElementById('buyLaserBtn').disabled = true;
+            printLog("¡Mercancía Láser de Plasma comprada! Daño aumentado.");
+        } else if (item === 'probe') {
+            autoDPS += 10;
+            document.getElementById('buyProbeBtn').innerText = "ADQUIRIDO";
+            document.getElementById('buyProbeBtn').disabled = true;
+            printLog("¡Mercancía Sonda de Antimateria activada! Generando DPS pasivo.");
+        } else if (item === 'shield') {
+            coinMultiplier = 1.5;
+            document.getElementById('buyShieldBtn').innerText = "ADQUIRIDO";
+            document.getElementById('buyShieldBtn').disabled = true;
+            printLog("¡Mercancía Escudo de Vacío equipada! Recursos aumentados.");
+        }
+    }
+
+    // DPS Pasivo de la tienda
+    setInterval(() => {
+        if (solarSmashActive && autoDPS > 0) {
+            planetHP -= autoDPS;
+            if (planetHP <= 0) {
+                planetHP = 1000;
+                let reward = Math.floor(100 * coinMultiplier);
+                dustCoins += reward;
+                dustLabel.innerText = `Polvo Estelar: ${dustCoins}`;
+                printLog(`💥 El daño pasivo destruyó el planeta. Ganaste ${reward} de Polvo Estelar!`);
+            }
+            planetHPLabel.innerText = `HP: ${planetHP} / 1000`;
+        }
+    }, 1000);
+
+    // --- PANELES ESPACIALES ---
+    function toggleSpacePanel(id) {
+        const panels = document.querySelectorAll('.space-panel');
+        const buttons = document.querySelectorAll('.space-tab-btn');
+        const targetPanel = document.getElementById(`panel-${id}`);
+        
+        panels.forEach(p => p.style.display = 'none');
+        buttons.forEach(b => b.classList.remove('active'));
+
+        if (targetPanel.style.display !== 'block') {
+            targetPanel.style.display = 'block';
+            event.target.classList.add('active');
+            printLog(`Mostrando datos de ${id.toUpperCase()}`);
+        }
+    }
+
+    // --- MODO DE JUEGO SOLAR SMASH ---
+    let solarSmashActive = false;
+    function toggleSolarSmash() {
+        solarSmashActive = !solarSmashActive;
+        solarSmash.style.display = solarSmashActive ? 'flex' : 'none';
+        printLog(solarSmashActive ? "Cargando simulador físico Solar Smash." : "Saliendo de Solar Smash.");
+    }
+
+    function damagePlanet(e) {
+        if (!solarSmashActive) return;
+        planetHP -= clickDamage;
+        if (planetHP <= 0) {
+            planetHP = 1000;
+            let reward = Math.floor(100 * coinMultiplier);
+            dustCoins += reward;
+            dustLabel.innerText = `Polvo Estelar: ${dustCoins}`;
+            printLog(`💥 ¡Planeta devastado! Ganaste ${reward} de Polvo Estelar!`);
+        }
+        planetHPLabel.innerText = `HP: ${planetHP} / 1000`;
+
+        const text = document.createElement('div');
+        text.className = 'dmg-text';
+        text.innerText = `-${clickDamage}`;
+        text.style.left = `${e.clientX || e.touches[0].clientX}px`;
+        text.style.top = `${e.clientY || e.touches[0].clientY}px`;
+        document.body.appendChild(text);
+        setTimeout(() => text.remove(), 600);
+    }
+
+    // --- ARRASTRE DE WIDGET ---
     let activeDrag = false;
     let currentX, currentY, initialX, initialY;
     let xOffset = 0, yOffset = 0;
@@ -169,84 +567,96 @@
         }
     }, { passive: false });
 
-    document.addEventListener('touchend', () => {
-        activeDrag = false;
-    });
+    document.addEventListener('touchend', () => { activeDrag = false; });
 
-    // --- LÓGICA DE MACROS POR NODOS (1, 2, 3) ---
+    // --- AUTOMATIZACIÓN DE NODOS (MACRO + LÁSER) ---
     function addNewTargetNode() {
-        const nodeIndex = registeredNodes.length + 1;
+        const id = registeredNodes.length + 1;
         const node = document.createElement('div');
         node.className = 'click-target-node';
-        node.innerText = nodeIndex;
-        
-        // Lo posicionamos en un lugar aleatorio del simulador
-        const x = Math.floor(Math.random() * (area.clientWidth - 80)) + 40;
-        const y = Math.floor(Math.random() * (area.clientHeight - 80)) + 40;
-        
+        node.innerText = id;
+
+        const x = Math.floor(Math.random() * (area.clientWidth - 100)) + 50;
+        const y = Math.floor(Math.random() * (area.clientHeight - 180)) + 120;
+
         node.style.left = `${x}px`;
         node.style.top = `${y}px`;
-        
+
         area.appendChild(node);
-        registeredNodes.push({ element: node, x: x, y: y });
-        printLog(`Añadido nodo de click #${nodeIndex} en X:${x} Y:${y}`);
+        registeredNodes.push({ element: node, x, y });
+        printLog(`Baliza de disparo registrada #${id} [X:${x} Y:${y}]`);
     }
 
-    function triggerVisualTap(x, y) {
-        const pulse = document.createElement('div');
-        pulse.className = 'pulse-effect';
-        pulse.style.left = `${x}px`;
-        pulse.style.top = `${y}px`;
-        area.appendChild(pulse);
-        setTimeout(() => pulse.remove(), 400);
-    }
-
-    async function executeMacroBucle() {
+    async function playMacro() {
         if (registeredNodes.length === 0) {
-            printLog("No hay nodos agregados. Pulsa el botón [+] del widget.");
+            printLog("Crea nodos de clic con el botón [+] antes de reproducir.");
             return;
         }
 
-        printLog("Ejecutando secuencia de clicks...");
-        for (let i = 0; i < registeredNodes.length; i++) {
-            const node = registeredNodes[i];
-            await new Promise(r => setTimeout(r, 600)); // Retraso entre clicks
-            triggerVisualTap(node.x, node.y);
-            printLog(`[Tap] Ejecutado toque en el Nodo ${i + 1}`);
-        }
+        printLog("Iniciando secuencia de macros en bucle...");
+        do {
+            for (let node of registeredNodes) {
+                shootLaser(node.x, node.y);
+                await new Promise(r => setTimeout(r, 600));
+
+                if (solarSmashActive) {
+                    const planetEl = document.getElementById('gamePlanet');
+                    const rect = planetEl.getBoundingClientRect();
+                    const areaRect = area.getBoundingClientRect();
+                    const px = rect.left + rect.width / 2 - areaRect.left;
+                    const py = rect.top + rect.height / 2 - areaRect.top;
+
+                    const dist = Math.hypot(node.x - px, node.y - py);
+                    if (dist < 90) {
+                        damagePlanet({ clientX: rect.left + 70, clientY: rect.top + 70 });
+                    }
+                }
+            }
+        } while (isLooping);
     }
 
-    // --- MODO SMART AUTO-CLAIM (DETECTOR DE OBJETOS) ---
-    function toggleSmartClaim() {
-        isSmartClaimActive = !isSmartClaimActive;
-        if (isSmartClaimActive) {
-            printLog("🤖 Modo Auto-Claim Activo. Escaneando objetos...");
-            smartLoopInterval = setInterval(() => {
-                // Genera y detecta un objeto simulado aleatoriamente para atraparlo instantáneamente
-                const targetX = Math.floor(Math.random() * (area.clientWidth - 80)) + 40;
-                const targetY = Math.floor(Math.random() * (area.clientHeight - 80)) + 40;
-                
-                triggerVisualTap(targetX, targetY);
-                printLog(`[Auto-IA] Objeto detectado en X:${targetX} Y:${targetY} -> ¡Reclamado!`);
-            }, 1200);
-        } else {
-            clearInterval(smartLoopInterval);
-            printLog("Modo Auto-Claim desactivado.");
-        }
+    function shootLaser(targetX, targetY) {
+        const laser = document.createElement('div');
+        laser.className = 'laser-beam';
+        
+        const widgetRect = widget.getBoundingClientRect();
+        const areaRect = area.getBoundingClientRect();
+
+        const startX = widgetRect.left + 19 - areaRect.left;
+        const startY = widgetRect.top + 19 - areaRect.top;
+
+        const angle = Math.atan2(targetY - startY, targetX - startX);
+        const distance = Math.hypot(targetY - startY, targetX - startX);
+
+        laser.style.width = `${distance}px`;
+        laser.style.left = `${startX}px`;
+        laser.style.top = `${startY}px`;
+        laser.style.transform = `rotate(${angle}rad)`;
+
+        area.appendChild(laser);
+        setTimeout(() => { laser.style.opacity = '0'; setTimeout(() => laser.remove(), 150); }, 100);
+    }
+
+    function toggleLoopMode() {
+        isLooping = !isLooping;
+        printLog(isLooping ? "Modo repetición contínua activado." : "Repetición desactivada.");
     }
 
     function clearAllNodes() {
-        const nodes = document.querySelectorAll('.click-target-node');
-        nodes.forEach(n => n.remove());
+        document.querySelectorAll('.click-target-node').forEach(n => n.remove());
         registeredNodes = [];
-        printLog("Memoria y nodos limpios.");
+        printLog("Coordenadas depuradas de memoria.");
     }
 
-    // Registro de Service Worker para asegurar funcionamiento Offline
+    // --- REGISTRO DEL SERVICE WORKER ---
     if ('serviceWorker' in navigator) {
-        const sw = `self.addEventListener('fetch', (e) => {});`;
-        const b = new Blob([sw], {type: 'application/javascript'});
-        navigator.serviceWorker.register(URL.createObjectURL(b)).catch(() => {});
+        const swText = `
+            self.addEventListener('install', (e) => self.skipWaiting());
+            self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
+            self.addEventListener('fetch', (e) => e.respondWith(fetch(e.request).catch(() => new Response("Offline"))));
+        `;
+        const blob = new Blob([swText], { type: 'application/javascript' });
+        navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
     }
 </script>
 </body>
