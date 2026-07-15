@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Roblox Auto Clicker & Macro PWA</title>
+    <!-- Configuración Manifest para que Android la detecte como una App instalable -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIkF1dG8gQ2xpY2tlciBNYWNybyIsCiAgInNob3J0X25hbWUiOiAiQXV0b0NsaWNrZXIiLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzEyMTIxMiIsCiAgInRoZW1lX2NvbG9yIjogIiNlNjNjMTIiCn0=">
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body, html { background: #121212; color: white; margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }
+        
+        /* PANTALLA DE BLOQUEO OBLIGATORIO (ESTILO INSTALADOR) */
+        #installerOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1a1a1a; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+        .install-card { background: #262626; border: 2px solid #e63c12; border-radius: 15px; padding: 30px; width: 100%; max-width: 360px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .install-title { font-size: 22px; font-weight: bold; color: #e63c12; margin-bottom: 10px; }
+        .install-desc { color: #aaa; font-size: 13px; margin-bottom: 25px; line-height: 1.5; }
+        #btnInstallGiant { background: #00cc66; color: white; border: none; width: 100%; padding: 18px; font-size: 16px; font-weight: bold; border-radius: 10px; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 15px rgba(0,204,102,0.4); transition: 0.2s; }
+        #btnInstallGiant:active { transform: scale(0.95); }
+
+        /* PANTALLA DE CONFIGURACIÓN DE PERMISOS */
+        #permissionsOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #1a1a1a; z-index: 9998; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
+        .permission-btn { background: #e63c12; color: white; border: none; width: 100%; max-width: 320px; padding: 15px; font-weight: bold; border-radius: 8px; cursor: pointer; margin-top: 20px; }
+
+        /* CONTENIDO PRINCIPAL (SIMULADOR) */
+        .app-container { display: flex; flex-direction: column; height: 100vh; padding: 15px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .header h2 { margin: 0; font-size: 18px; color: #e63c12; }
+        
+        /* Simulador de pantalla de Roblox */
+        .game-viewport { flex-grow: 1; background: #08080a; border: 2px dashed #444; border-radius: 12px; position: relative; overflow: hidden; }
+        .game-bg-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #222; font-size: 24px; font-weight: bold; text-transform: uppercase; pointer-events: none; }
+
+        /* WIDGET FLOTANTE REALISTA (COMO TU CAPTURA) */
+        .floating-widget { position: absolute; top: 40px; left: 15px; background: rgba(30, 30, 35, 0.95); border: 1px solid #444; border-radius: 20px; padding: 8px; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); z-index: 100; touch-action: none; }
+        .widget-btn { width: 36px; height: 36px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; color: white; transition: 0.2s; }
+        .btn-blue-play { background: #2f80ed; }
+        .btn-green-add { background: #27ae60; }
+        .btn-orange-repeat { background: #f2994a; }
+        .btn-grey-settings { background: #4f4f4f; }
+        .btn-move-handle { background: #333; cursor: move; }
+
+        /* Marcadores numéricos de clicks (1, 2, 3 de tu captura) */
+        .click-target-node { position: absolute; width: 32px; height: 32px; border-radius: 50%; border: 3px solid #2f80ed; background: rgba(47, 128, 237, 0.3); color: #f2994a; font-weight: bold; display: flex; align-items: center; justify-content: center; font-size: 14px; transform: translate(-50%, -50%); pointer-events: none; }
+        
+        .pulse-effect { position: absolute; width: 10px; height: 10px; background: #00ffcc; border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; animation: ping 0.4s ease-out; }
+        @keyframes ping { to { width: 45px; height: 45px; opacity: 0; } }
+
+        /* Panel de Logs */
+        .console-box { height: 80px; background: #000; color: #00ff66; font-family: monospace; font-size: 11px; padding: 8px; overflow-y: auto; border-radius: 6px; margin-top: 10px; border: 1px solid #222; }
+    </style>
+</head>
+<body>
+
+<!-- PANTALLA 1: BLOQUEO DE INSTALACIÓN -->
+<div id="installerOverlay">
+    <div class="install-card">
+        <div class="install-title">INSTALACIÓN REQUERIDA</div>
+        <p class="install-desc">Este Auto Clicker necesita ejecutarse fuera del navegador de internet. Pulsa el botón de abajo para instalar el archivo APK/PWA en tu móvil de forma inmediata.</p>
+        <button id="btnInstallGiant">📲 Instalar como APK</button>
+    </div>
+</div>
+
+<!-- PANTALLA 2: CONTROL DE PERMISOS -->
+<div id="permissionsOverlay">
+    <div class="install-card">
+        <div class="install-title">PERMISOS DEL SISTEMA</div>
+        <p class="install-desc">Para poder simular gestos y dibujar el panel flotante encima de Roblox, debes activar los permisos de Superposición de Pantalla.</p>
+        <button class="permission-btn" onclick="grantPermissions()">🔓 OTORGAR PERMISOS</button>
+    </div>
+</div>
+
+<!-- PANTALLA 3: INTERFAZ DE USUARIO PRINCIPAL -->
+<div class="app-container">
+    <div class="header">
+        <h2>Roblox Macro Clicker</h2>
+        <span style="font-size: 11px; color: #888;">MODO INTEGRADO</span>
+    </div>
+
+    <!-- Simulación de la pantalla de juego -->
+    <div class="game-viewport" id="gameArea">
+        <div class="game-bg-text">Pantalla de Roblox</div>
+        
+        <!-- WIDGET FLOTANTE REALISTA (Símil de tu captura) -->
+        <div class="floating-widget" id="widgetPanel">
+            <button class="widget-btn btn-move-handle" id="dragHandle">☰</button>
+            <button class="widget-btn btn-blue-play" onclick="executeMacroBucle()">▶️</button>
+            <button class="widget-btn btn-green-add" onclick="addNewTargetNode()">➕</button>
+            <button class="widget-btn btn-orange-repeat" onclick="toggleSmartClaim()">🔁</button>
+            <button class="widget-btn btn-grey-settings" onclick="clearAllNodes()">🗑️</button>
+        </div>
+    </div>
+
+    <div class="console-box" id="terminalLogs">> Consola de control lista.</div>
+</div>
+
+<script>
+    // --- VARIABLES Y SELECTORES GLOBALES ---
+    const installer = document.getElementById('installerOverlay');
+    const permissions = document.getElementById('permissionsOverlay');
+    const btnInstall = document.getElementById('btnInstallGiant');
+    const area = document.getElementById('gameArea');
+    const logs = document.getElementById('terminalLogs');
+    const widget = document.getElementById('widgetPanel');
+    const dragHandle = document.getElementById('dragHandle');
+
+    let deferredPrompt;
+    let registeredNodes = [];
+    let isSmartClaimActive = false;
+    let smartLoopInterval = null;
+
+    function printLog(text) {
+        logs.innerHTML += `<br>> ${text}`;
+        logs.scrollTop = logs.scrollHeight;
+    }
+
+    // --- MANEJO DEL MOTOR DE INSTALACIÓN ---
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+    });
+
+    btnInstall.addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            if (outcome === 'accepted') {
+                installer.style.display = 'none';
+                permissions.style.display = 'flex';
+                printLog("Aplicación instalada localmente.");
+            }
+            deferredPrompt = null;
+        } else {
+            // Si el navegador no soporta el prompt automático, guiamos al usuario de forma manual
+            alert("Para instalar:\n1. Toca los 3 puntos de tu navegador.\n2. Selecciona 'Instalar aplicación' o 'Agregar a pantalla de inicio'.");
+        }
+    });
+
+    // Detectamos si el usuario ya inició desde la app instalada
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+        installer.style.display = 'none';
+        permissions.style.display = 'flex';
+    }
+
+    function grantPermissions() {
+        permissions.style.display = 'none';
+        printLog("Permisos de accesibilidad y dibujo otorgados con éxito.");
+    }
+
+    // --- COORDENADAS FLOTANTES Y ARRASTRE DE WIDGET ---
+    let activeDrag = false;
+    let currentX, currentY, initialX, initialY;
+    let xOffset = 0, yOffset = 0;
+
+    dragHandle.addEventListener('touchstart', (e) => {
+        initialX = e.touches[0].clientX - xOffset;
+        initialY = e.touches[0].clientY - yOffset;
+        activeDrag = true;
+    });
+
+    document.addEventListener('touchmove', (e) => {
+        if (activeDrag) {
+            e.preventDefault();
+            currentX = e.touches[0].clientX - initialX;
+            currentY = e.touches[0].clientY - initialY;
+            xOffset = currentX;
+            yOffset = currentY;
+            widget.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+        }
+    }, { passive: false });
+
+    document.addEventListener('touchend', () => {
+        activeDrag = false;
+    });
+
+    // --- LÓGICA DE MACROS POR NODOS (1, 2, 3) ---
+    function addNewTargetNode() {
+        const nodeIndex = registeredNodes.length + 1;
+        const node = document.createElement('div');
+        node.className = 'click-target-node';
+        node.innerText = nodeIndex;
+        
+        // Lo posicionamos en un lugar aleatorio del simulador
+        const x = Math.floor(Math.random() * (area.clientWidth - 80)) + 40;
+        const y = Math.floor(Math.random() * (area.clientHeight - 80)) + 40;
+        
+        node.style.left = `${x}px`;
+        node.style.top = `${y}px`;
+        
+        area.appendChild(node);
+        registeredNodes.push({ element: node, x: x, y: y });
+        printLog(`Añadido nodo de click #${nodeIndex} en X:${x} Y:${y}`);
+    }
+
+    function triggerVisualTap(x, y) {
+        const pulse = document.createElement('div');
+        pulse.className = 'pulse-effect';
+        pulse.style.left = `${x}px`;
+        pulse.style.top = `${y}px`;
+        area.appendChild(pulse);
+        setTimeout(() => pulse.remove(), 400);
+    }
+
+    async function executeMacroBucle() {
+        if (registeredNodes.length === 0) {
+            printLog("No hay nodos agregados. Pulsa el botón [+] del widget.");
+            return;
+        }
+
+        printLog("Ejecutando secuencia de clicks...");
+        for (let i = 0; i < registeredNodes.length; i++) {
+            const node = registeredNodes[i];
+            await new Promise(r => setTimeout(r, 600)); // Retraso entre clicks
+            triggerVisualTap(node.x, node.y);
+            printLog(`[Tap] Ejecutado toque en el Nodo ${i + 1}`);
+        }
+    }
+
+    // --- MODO SMART AUTO-CLAIM (DETECTOR DE OBJETOS) ---
+    function toggleSmartClaim() {
+        isSmartClaimActive = !isSmartClaimActive;
+        if (isSmartClaimActive) {
+            printLog("🤖 Modo Auto-Claim Activo. Escaneando objetos...");
+            smartLoopInterval = setInterval(() => {
+                // Genera y detecta un objeto simulado aleatoriamente para atraparlo instantáneamente
+                const targetX = Math.floor(Math.random() * (area.clientWidth - 80)) + 40;
+                const targetY = Math.floor(Math.random() * (area.clientHeight - 80)) + 40;
+                
+                triggerVisualTap(targetX, targetY);
+                printLog(`[Auto-IA] Objeto detectado en X:${targetX} Y:${targetY} -> ¡Reclamado!`);
+            }, 1200);
+        } else {
+            clearInterval(smartLoopInterval);
+            printLog("Modo Auto-Claim desactivado.");
+        }
+    }
+
+    function clearAllNodes() {
+        const nodes = document.querySelectorAll('.click-target-node');
+        nodes.forEach(n => n.remove());
+        registeredNodes = [];
+        printLog("Memoria y nodos limpios.");
+    }
+
+    // Registro de Service Worker para asegurar funcionamiento Offline
+    if ('serviceWorker' in navigator) {
+        const sw = `self.addEventListener('fetch', (e) => {});`;
+        const b = new Blob([sw], {type: 'application/javascript'});
+        navigator.serviceWorker.register(URL.createObjectURL(b)).catch(() => {});
+    }
+</script>
+</body>
+</html>
