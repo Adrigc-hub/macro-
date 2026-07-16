@@ -2,432 +2,463 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Stelar Macro</title>
-    <!-- MANIFEST CON ICONO FORZADO EN HD -->
-    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjogIlN0ZWxhciBNYWNybyIsICJzaG9ydF9uYW1lIjogIlN0ZWxhck1hY3JvIiwgInN0YXJ0X3VybCI6ICIuIiwgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsICJiYWNrZ3JvdW5kX2NvbG9yIjogIiMwNTA2MGYiLCAidGhlbWVfY29sb3IiOiAiIzAwYWZmZiIsICJpY29ucyI6IFt7InNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWw7YmFzZTY0LFBITmhkbVp5SW50b2N3b2daR0YwWVNJZ2V6SjNMV052YkdVb2pSMmR6TG5jekxuTnlaM2N2TWpBd01DOWpZWFJuSWdadmFXZDFZbTkyYjI0Z2RUbHdaVzRpTENJZ2V6STZPakV3TUNJZ2V6STZPakV3TUNKbFpYTWdlbUp6SWdadmJXMWxjeUlnYm1GdFpTSTZJQ0paZDJjZ0lDSjVJQ0pkWm1sc2JDSTZJQ0ptYVd4c2N5SWdiV0YyWlhJZ2MzUjliV1VnZXlKamFYSmpiR1VnWTNnOUp6UXdJQ0p6ZURVOUp6UXdJQ0p5UFQwd0p6UXdJQ0ptYVc1c2JEMGdaWGg1Yld3Z2RtbGxkM0p2ZURwaVlYTmxaRFl6TkNKOUxqdz0iLCAic2l6ZXMiOiAiMTkyeDE5MiIsICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiLCAicHVycG9zZSI6ICJhbnkgaX crappyIn1dfQ==">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Frostbound: Echoes of the Sky - Prototype</title>
     <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; margin: 0; padding: 0; }
-        body { background: #04050e; color: #ffffff; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
-        
-        /* PANTALLA DE CARGA */
-        #loaderScreen {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: radial-gradient(circle, #090c1f 0%, #020307 100%);
-            z-index: 20000; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; transition: opacity 0.6s ease-in-out;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
         }
-        .protogen-box { display: flex; flex-direction: column; align-items: center; gap: 15px; }
-        #protogenCanvas { width: 200px; height: 200px; image-rendering: pixelated; }
-        .loading-bar-container {
-            width: 240px; height: 6px; background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px; overflow: hidden; margin-top: 10px; border: 1px solid rgba(0, 188, 255, 0.2);
+        body {
+            background-color: #050811;
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
         }
-        .loading-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #b23b19, #f9b233); box-shadow: 0 0 8px #f9b233; }
-        .loading-text { color: #f9b233; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; }
-
-        /* INTERFAZ PRINCIPAL */
-        .app-shell { display: flex; flex-direction: column; height: 100%; }
-        .navbar { height: 60px; background: rgba(8, 11, 26, 0.95); display: flex; align-items: center; justify-content: space-between; padding: 0 15px; border-bottom: 1px solid #162044; }
-        .navbar h1 { font-size: 18px; color: #f9b233; font-weight: 900; }
-        .nav-controls { display: flex; gap: 8px; }
-        .nav-btn { border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; font-size: 11px; color: white; cursor: pointer; }
-        .btn-red { background: #b23b19; }
-        .btn-purple { background: #8a2be2; }
-
-        .workspace { flex-grow: 1; background: #020307; position: relative; overflow: hidden; }
-        .starfield { position: absolute; top:0; left:0; width:100%; height:100%; pointer-events: none; }
-
-        /* SOLAR SMASH */
-        .solar-smash-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
-        .planet { width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #2a6ac5, #00bfff, #020307); box-shadow: 0 0 40px rgba(0, 191, 255, 0.5); position: relative; cursor: pointer; pointer-events: auto; transition: transform 0.1s; }
-        .planet-health { position: absolute; top: -35px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); padding: 4px 10px; border-radius: 12px; font-size: 10px; border: 1px solid #ff3333; color: #ff3333; width: max-content; }
-        .resource-counter { position: absolute; top: -60px; left: 50%; transform: translateX(-50%); color: #00ffaa; font-weight: bold; font-size: 11px; }
-        .dmg-text { position: absolute; font-weight: 900; font-size: 24px; color: #ff6a00; pointer-events: none; animation: floatAndFade 0.6s ease-out forwards; }
-        @keyframes floatAndFade { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-90px); opacity: 0; } }
-
-        /* WIDGET FLOTANTE PRO */
-        .floating-widget { position: absolute; top: 130px; right: 15px; background: rgba(8, 11, 26, 0.95); border: 1px solid #f9b233; border-radius: 20px; padding: 8px; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 0 20px rgba(249, 178, 51, 0.25); z-index: 100; touch-action: none; }
-        .widget-btn { width: 38px; height: 38px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px; color: white; transition: 0.2s; font-weight: bold; }
-        .btn-play { background: #2f80ed; }
-        .btn-add { background: #27ae60; }
-        .btn-record { background: #b23b19; }
-        .btn-ai { background: #f2c94c; color: #000; }
-        .btn-clear { background: #4f4f4f; }
-        .btn-handle { background: #162044; cursor: move; }
-
-        /* NODOS DE CLIC */
-        .click-target-node { position: absolute; width: 34px; height: 34px; border-radius: 50%; border: 3px solid #f9b233; background: rgba(249, 178, 51, 0.2); color: #fff; font-weight: bold; display: flex; align-items: center; justify-content: center; font-size: 14px; transform: translate(-50%, -50%); pointer-events: none; }
-        .laser-beam { position: absolute; height: 3px; background: #ff2a2a; transform-origin: top left; pointer-events: none; z-index: 90; }
-
-        /* Consola de logs */
-        .console-box { height: 90px; background: #010205; color: #f9b233; font-family: monospace; font-size: 11px; padding: 10px; overflow-y: auto; border-top: 1px solid #141b35; }
+        #gameContainer {
+            position: relative;
+            width: 100vw;
+            max-width: 640px;
+            height: 100vh;
+            max-height: 480px;
+            border: 4px solid #3a5fcd;
+            box-shadow: 0 0 20px rgba(58, 95, 205, 0.5);
+            background-color: #000;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        #instructions {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #8fa3db;
+            text-align: center;
+            max-width: 600px;
+        }
     </style>
 </head>
 <body>
 
-<!-- CARGADOR -->
-<div id="loaderScreen">
-    <div class="protogen-box">
-        <canvas id="protogenCanvas" width="64" height="64"></canvas>
-        <span class="loading-text" id="loaderStatusText">Iniciando Red Estelar...</span>
-        <div class="loading-bar-container"><div class="loading-bar" id="loadProgressBar"></div></div>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="640" height="480"></canvas>
     </div>
-</div>
-
-<!-- INTERFAZ PRINCIPAL -->
-<div class="app-shell">
-    <div class="navbar">
-        <h1>🌌 STELAR PRO</h1>
-        <div class="nav-controls">
-            <button class="nav-btn btn-purple" onclick="toggleAI()">🧠 MODO IA</button>
-            <button class="nav-btn btn-red" onclick="toggleRecordMode()">🔴 GRABAR</button>
-        </div>
-    </div>
-
-    <div class="workspace" id="gameArea" onclick="registerRecordTap(event)">
-        <canvas class="starfield" id="starfieldCanvas"></canvas>
-
-        <!-- MODO SOLAR SMASH -->
-        <div class="solar-smash-container">
-            <div class="planet" id="gamePlanet" onclick="damagePlanet(event)">
-                <div class="resource-counter" id="dustCoins">Polvo Estelar: 0</div>
-                <div class="planet-health" id="planetHP">HP: 1000 / 1000</div>
-            </div>
-        </div>
-
-        <!-- WIDGET INTEGRADO MULTIFUNCIÓN -->
-        <div class="floating-widget" id="widgetPanel">
-            <button class="widget-btn btn-handle" id="dragHandle">☰</button>
-            <button class="widget-btn btn-play" onclick="playMacro()" id="btnPlay">▶️</button>
-            <button class="widget-btn btn-add" onclick="addNewTargetNode()">➕</button>
-            <button class="widget-btn btn-record" onclick="toggleRecordMode()" id="btnRecord">R</button>
-            <button class="widget-btn btn-ai" onclick="toggleAI()" id="btnAI">AI</button>
-            <button class="widget-btn btn-clear" onclick="clearAllNodes()">🗑️</button>
-        </div>
-    </div>
-
-    <div class="console-box" id="terminalLogs">> Terminal de Órbita lista. Graba o usa el modo IA dentro de la app.</div>
-</div>
-
-<script>
-    const loader = document.getElementById('loaderScreen');
-    const area = document.getElementById('gameArea');
-    const logs = document.getElementById('terminalLogs');
-    const widget = document.getElementById('widgetPanel');
-    const dragHandle = document.getElementById('dragHandle');
-    const planetHPLabel = document.getElementById('planetHP');
-    const dustLabel = document.getElementById('dustCoins');
-    const progressBar = document.getElementById('loadProgressBar');
-    const statusText = document.getElementById('loaderStatusText');
-
-    let registeredNodes = [];
-    let isPlaying = false;
-    let isRecording = false;
-    let isAIMode = false;
-    let recordedClicks = [];
     
-    let planetHP = 1000;
-    let dustCoins = 0;
+    <div id="instructions">
+        <strong>Controles:</strong> Usa las <strong>Flechas del teclado</strong> o <strong>arrastra el dedo en pantalla</strong> para mover el alma de Kiba. ¡Esquiva las estrellas!
+    </div>
 
-    function printLog(text) {
-        logs.innerHTML += `<br>> ${text}`;
-        logs.scrollTop = logs.scrollHeight;
-    }
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
 
-    // --- MEJORA DEL MODELO PROTOGEN PERSONALIZADO (ZORRO ROJO/DORADO) ---
-    const protoCanvas = document.getElementById('protogenCanvas');
-    const protoCtx = protoCanvas.getContext('2d');
-    let protoFrame = 0;
+        // ESTADOS DEL JUEGO: "loading", "battle"
+        let gameState = "loading";
+        let loadProgress = 0;
 
-    const C_RED = "#B23B19";     // Rojo base pelaje
-    const C_ORANGE = "#E36F26";  // Naranja brillante transiciones
-    const C_GOLD = "#F9B233";    // Dorado brillante (visor, orejas, detalles)
-    const C_DARK = "#1C1B29";    // Azul oscuro casi negro (visor y partes oscuras)
-    const C_GREY = "#2C3E50";    // Placas de armadura
-    const C_FRAME = "#8A95A5";   // Marco del visor gris metálico
+        // Propiedades del Jugador (Kiba / Alma de Escarcha)
+        const player = {
+            x: 320,
+            y: 340,
+            size: 16,
+            speed: 5,
+            isDragging: false
+        };
 
-    function drawPixel(x, y, w, h, color) {
-        protoCtx.fillStyle = color;
-        protoCtx.fillRect(x, y, w, h);
-    }
+        // Teclas presionadas
+        const keys = {};
 
-    function drawProtogen() {
-        protoCtx.clearRect(0, 0, 64, 64);
-        protoFrame++;
+        // Configuración de la caja de batalla (Estilo Undertale)
+        const battleBox = {
+            x: 170,
+            y: 220,
+            width: 300,
+            height: 200
+        };
 
-        // Movimiento de respiración para todo el cuerpo
-        const breathY = Math.sin(protoFrame * 0.08) * 0.8;
+        // Proyectiles (Estrellas caídas)
+        let stars = [];
+        let starSpawnTimer = 0;
 
-        // 1. Gran cola/ala oscura detrás (a la izquierda)
-        drawPixel(8, 12 + breathY, 8, 38, C_DARK);
-        drawPixel(16, 10 + breathY, 2, 40, C_GOLD); // Borde dorado de la cola
+        // Escuchar teclado
+        window.addEventListener("keydown", (e) => { keys[e.code] = true; });
+        window.addEventListener("keyup", (e) => { keys[e.code] = false; });
 
-        // 2. Orejas Grandes (Estilo Zorro)
-        // Oreja Izquierda
-        drawPixel(16, 4 + breathY, 8, 18, C_RED);
-        drawPixel(18, 6 + breathY, 4, 14, C_DARK);
-        drawPixel(20, 6 + breathY, 2, 14, C_GOLD); // Brillo interno dorado
-        // Oreja Derecha
-        drawPixel(40, 4 + breathY, 8, 18, C_RED);
-        drawPixel(42, 6 + breathY, 4, 14, C_DARK);
-        drawPixel(44, 6 + breathY, 2, 14, C_GOLD); // Brillo interno dorado
+        // Escuchar eventos táctiles (Soporte móvil/iPad)
+        canvas.addEventListener("touchstart", (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const touchX = ((e.touches[0].clientX - rect.left) / rect.width) * canvas.width;
+            const touchY = ((e.touches[0].clientY - rect.top) / rect.height) * canvas.height;
 
-        // 3. Pelo superior (Mechones rebeldes)
-        drawPixel(26, 8 + breathY, 12, 4, C_RED);
-        drawPixel(29, 6 + breathY, 6, 2, C_RED);
+            // Si tocamos cerca del jugador, activamos el arrastre
+            const dist = Math.hypot(touchX - player.x, touchY - player.y);
+            if (dist < 40) {
+                player.isDragging = true;
+            }
+        });
 
-        // 4. Mejillas esponjosas a los lados del rostro
-        drawPixel(14, 25 + breathY, 6, 10, C_RED);
-        drawPixel(44, 25 + breathY, 6, 10, C_RED);
-        drawPixel(16, 27 + breathY, 4, 6, C_ORANGE);
-        drawPixel(44, 27 + breathY, 4, 6, C_ORANGE);
+        canvas.addEventListener("touchmove", (e) => {
+            if (player.isDragging && gameState === "battle") {
+                const rect = canvas.getBoundingClientRect();
+                let touchX = ((e.touches[0].clientX - rect.left) / rect.width) * canvas.width;
+                let touchY = ((e.touches[0].clientY - rect.top) / rect.height) * canvas.height;
 
-        // 5. Cuello
-        drawPixel(26, 35 + breathY, 12, 6, C_RED);
+                // Limitar movimiento dentro de la caja de batalla
+                player.x = Math.max(battleBox.x + player.size, Math.min(battleBox.x + battleBox.width - player.size, touchX));
+                player.y = Math.max(battleBox.y + player.size, Math.min(battleBox.y + battleBox.height - player.size, touchY));
+            }
+            e.preventDefault();
+        }, { passive: false });
 
-        // 6. Pecho y hombros con armadura
-        drawPixel(18, 41 + breathY, 28, 23, C_RED); // Hombros base
-        drawPixel(22, 40 + breathY, 6, 8, C_GREY);   // Hombrera Izq
-        drawPixel(36, 40 + breathY, 6, 8, C_GREY);   // Hombrera Der
-        drawPixel(24, 42 + breathY, 2, 4, C_GOLD);   // Detalle dorado hombro izq
-        drawPixel(38, 42 + breathY, 2, 4, C_GOLD);   // Detalle dorado hombro der
-        drawPixel(26, 46 + breathY, 12, 18, C_DARK); // Placa central de pecho
-        drawPixel(29, 49 + breathY, 6, 15, C_RED);   // Núcleo rojo de pecho
+        canvas.addEventListener("touchend", () => {
+            player.isDragging = false;
+        });
 
-        // 7. Manos/Parras abajo
-        drawPixel(6, 44, 10, 20, C_RED);
-        drawPixel(48, 44, 10, 20, C_RED);
-        drawPixel(6, 44, 10, 4, C_DARK); // Garras oscuras
-        drawPixel(48, 44, 10, 4, C_DARK);
+        // DIBUJAR AL PROTAGONISTA (Zorro Ártico Vectorial)
+        function drawKiba(x, y, scale) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.scale(scale, scale);
 
-        // 8. Base Cabeza y Marco del Visor
-        drawPixel(22, 18 + breathY, 20, 19, C_RED);
-        drawPixel(20, 19 + breathY, 24, 17, C_FRAME); // Marco metálico gris
+            // Orejas traseras (sombras)
+            ctx.fillStyle = "#a8bde3";
+            ctx.beginPath();
+            ctx.moveTo(-35, -40); ctx.lineTo(-15, -75); ctx.lineTo(-5, -45);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(35, -40); ctx.lineTo(15, -75); ctx.lineTo(5, -45);
+            ctx.fill();
 
-        // 9. Pantalla del Visor (Redondeada)
-        drawPixel(22, 20 + breathY, 20, 15, C_DARK);
-        drawPixel(24, 21 + breathY, 16, 13, C_DARK);
+            // Orejas delanteras (blancas)
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.moveTo(-30, -35); ctx.lineTo(-15, -70); ctx.lineTo(-5, -40);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(30, -35); ctx.lineTo(15, -70); ctx.lineTo(5, -40);
+            ctx.fill();
 
-        // 10. Expresión LED Dorada (Ojos grandes y boca feliz del zorro)
-        drawPixel(24, 24 + breathY, 4, 6, C_GOLD); // Ojo Izq
-        drawPixel(36, 24 + breathY, 4, 6, C_GOLD); // Ojo Der
-        
-        drawPixel(31, 28 + breathY, 2, 2, C_GOLD); // Nariz LED
+            // Interior de las orejas (Azul hielo / Celestial)
+            ctx.fillStyle = "#7ca1db";
+            ctx.beginPath();
+            ctx.moveTo(-25, -35); ctx.lineTo(-15, -60); ctx.lineTo(-10, -40);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.moveTo(25, -35); ctx.lineTo(15, -60); ctx.lineTo(10, -40);
+            ctx.fill();
 
-        // Boca tierna W
-        drawPixel(28, 31 + breathY, 1, 2, C_GOLD);
-        drawPixel(29, 32 + breathY, 2, 1, C_GOLD);
-        drawPixel(31, 31 + breathY, 2, 1, C_GOLD);
-        drawPixel(33, 32 + breathY, 2, 1, C_GOLD);
-        drawPixel(35, 31 + breathY, 1, 2, C_GOLD);
+            // Cabeza (Base blanca)
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc(0, -10, 35, 0, Math.PI * 2);
+            ctx.fill();
 
-        requestAnimationFrame(drawProtogen);
-    }
-    drawProtogen();
+            // Mejillas esponjosas del zorro
+            ctx.beginPath();
+            ctx.moveTo(-35, -10);
+            ctx.quadraticCurveTo(-50, 0, -35, 10);
+            ctx.lineTo(-20, 10);
+            ctx.fill();
 
-    // --- CARGADOR DE PANTALLA ---
-    let progress = 0;
-    const loadInterval = setInterval(() => {
-        progress += 4;
-        progressBar.style.width = `${progress}%`;
-        if (progress >= 100) {
-            clearInterval(loadInterval);
-            loader.style.opacity = '0';
-            setTimeout(() => loader.style.display = 'none', 600);
-        }
-    }, 50);
+            ctx.beginPath();
+            ctx.moveTo(35, -10);
+            ctx.quadraticCurveTo(50, 0, 35, 10);
+            ctx.lineTo(20, 10);
+            ctx.fill();
 
-    // --- MODO GRABAR (RECORD MODE) ---
-    function toggleRecordMode() {
-        isRecording = !isRecording;
-        const btn = document.getElementById('btnRecord');
-        if (isRecording) {
-            recordedClicks = [];
-            btn.style.background = "#ff9f43";
-            btn.innerText = "⏺️";
-            printLog("Modo grabación ACTIVADO. Toca cualquier parte del espacio para registrar clics.");
-        } else {
-            btn.style.background = "#b23b19";
-            btn.innerText = "R";
-            printLog(`Grabación FINALIZADA. Guardados ${recordedClicks.length} clics.`);
-        }
-    }
+            // Ojos grandes azules
+            ctx.fillStyle = "#00d2ff";
+            ctx.beginPath();
+            ctx.arc(-13, -15, 6, 0, Math.PI * 2);
+            ctx.arc(13, -15, 6, 0, Math.PI * 2);
+            ctx.fill();
 
-    function registerRecordTap(e) {
-        if (!isRecording) return;
-        if (e.target.closest('#widgetPanel') || e.target.closest('.navbar')) return;
+            // Brillo de los ojos
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc(-15, -17, 2, 0, Math.PI * 2);
+            ctx.arc(11, -17, 2, 0, Math.PI * 2);
+            ctx.fill();
 
-        const rect = area.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+            // Hocico
+            ctx.fillStyle = "#d0def2";
+            ctx.beginPath();
+            ctx.moveTo(-8, -5);
+            ctx.lineTo(8, -5);
+            ctx.lineTo(0, 5);
+            ctx.closePath();
+            ctx.fill();
 
-        recordedClicks.push({ x, y });
-        createTempVisualNode(x, y);
-        printLog(`Punto registrado: [X:${Math.round(x)} Y:${Math.round(y)}]`);
-    }
+            // Nariz negra pequeña
+            ctx.fillStyle = "#202b3d";
+            ctx.beginPath();
+            ctx.arc(0, 0, 3, 0, Math.PI * 2);
+            ctx.fill();
 
-    function createTempVisualNode(x, y) {
-        const temp = document.createElement('div');
-        temp.className = 'click-target-node';
-        temp.style.borderColor = '#ff9f43';
-        temp.style.left = `${x}px`;
-        temp.style.top = `${y}px`;
-        temp.innerText = "R";
-        area.appendChild(temp);
-        setTimeout(() => temp.remove(), 1000);
-    }
+            // Bufanda de Kiba (Azul oscuro flotando con polvo de estrellas)
+            ctx.fillStyle = "#1d3363";
+            ctx.beginPath();
+            ctx.ellipse(0, 25, 25, 8, 0, 0, Math.PI * 2);
+            ctx.fill();
 
-    // --- MODO INTELIGENCIA ARTIFICIAL (AI MODE) ---
-    function toggleAI() {
-        isAIMode = !isAIMode;
-        const btn = document.getElementById('btnAI');
-        if (isAIMode) {
-            btn.style.background = "#27ae60";
-            btn.style.color = "#fff";
-            printLog("Modo IA activado. Analizando patrones espaciales...");
-            runAIScan();
-        } else {
-            btn.style.background = "#f2c94c";
-            btn.style.color = "#000";
-            printLog("Modo IA desactivado.");
-        }
-    }
+            // Detalle de la bufanda colgando
+            ctx.beginPath();
+            ctx.moveTo(-15, 25);
+            ctx.lineTo(-30, 45);
+            ctx.lineTo(-18, 50);
+            ctx.lineTo(-5, 27);
+            ctx.fill();
 
-    async function runAIScan() {
-        while (isAIMode) {
-            const planetEl = document.getElementById('gamePlanet');
-            const pRect = planetEl.getBoundingClientRect();
-            const aRect = area.getBoundingClientRect();
+            // Pequeños brillos de estrellas en la bufanda
+            ctx.fillStyle = "#7ef0ff";
+            ctx.fillRect(-22, 38, 2, 2);
+            ctx.fillRect(-18, 44, 2, 2);
 
-            const targetX = pRect.left + pRect.width / 2 - aRect.left + (Math.random() * 40 - 20);
-            const targetY = pRect.top + pRect.height / 2 - aRect.top + (Math.random() * 40 - 20);
-
-            shootLaser(targetX, targetY);
-            damagePlanet({ clientX: targetX + aRect.left, clientY: targetY + aRect.top });
-
-            await new Promise(r => setTimeout(r, 200));
-        }
-    }
-
-    // --- REPRODUCIR CLICS / MACRO GRABADO ---
-    async function playMacro() {
-        if (isPlaying) {
-            isPlaying = false;
-            document.getElementById('btnPlay').innerText = "▶️";
-            printLog("Macro pausada.");
-            return;
+            ctx.restore();
         }
 
-        const nodesToRun = isRecording ? recordedClicks : registeredNodes;
-        if (nodesToRun.length === 0) {
-            printLog("No hay clics grabados ni nodos creados. Usa [+] o graba con [R] primero.");
-            return;
-        }
-
-        isPlaying = true;
-        document.getElementById('btnPlay').innerText = "⏸️";
-        printLog("Iniciando ciclo de auto-clicker...");
-
-        while (isPlaying) {
-            for (let node of nodesToRun) {
-                if (!isPlaying) break;
-                shootLaser(node.x, node.y);
-                damagePlanet({ clientX: node.x + area.getBoundingClientRect().left, clientY: node.y + area.getBoundingClientRect().top });
-                await new Promise(r => setTimeout(r, 400));
+        // CONTROL DE PANTALLA DE CARGA
+        function updateLoading() {
+            if (loadProgress < 100) {
+                loadProgress += 0.8; // Simula la velocidad de carga
+            } else {
+                gameState = "battle";
             }
         }
-    }
 
-    // --- COSAS BÁSICAS DEL SIMULADOR ---
-    function damagePlanet(e) {
-        planetHP -= 50;
-        if (planetHP <= 0) {
-            planetHP = 1000;
-            dustCoins += 100;
-            dustLabel.innerText = `Polvo Estelar: ${dustCoins}`;
+        function drawLoading() {
+            // Fondo Espacial Oscuro
+            ctx.fillStyle = "#040712";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Estrellas de fondo decorativas
+            ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+            ctx.fillRect(100, 80, 2, 2);
+            ctx.fillRect(500, 120, 3, 3);
+            ctx.fillRect(150, 350, 2, 2);
+            ctx.fillRect(480, 300, 1, 1);
+
+            // Dibujar al zorro Kiba en el centro
+            drawKiba(320, 200, 1.3);
+
+            // Texto "Cargando..."
+            ctx.fillStyle = "#eef4ff";
+            ctx.font = "20px 'Courier New'";
+            ctx.textAlign = "center";
+            ctx.fillText("Cargando el Subsuelo...", 320, 310);
+
+            // Marco de barra de carga
+            ctx.strokeStyle = "#3a5fcd";
+            ctx.lineWidth = 3;
+            ctx.strokeRect(170, 340, 300, 20);
+
+            // Relleno de la barra (Gradiente azul helado)
+            ctx.fillStyle = "#00d2ff";
+            ctx.fillRect(174, 344, (292 * loadProgress) / 100, 12);
+            
+            // Texto del porcentaje
+            ctx.fillStyle = "#8fa3db";
+            ctx.font = "14px 'Courier New'";
+            ctx.fillText(`${Math.floor(loadProgress)}%`, 320, 385);
         }
-        planetHPLabel.innerText = `HP: ${planetHP} / 1000`;
 
-        const text = document.createElement('div');
-        text.className = 'dmg-text';
-        text.innerText = `-50`;
-        text.style.left = `${e.clientX}px`;
-        text.style.top = `${e.clientY}px`;
-        document.body.appendChild(text);
-        setTimeout(() => text.remove(), 600);
-    }
+        // LÓGICA DE COMBATE (BATTLE STATE)
+        function updateBattle() {
+            // Movimiento por teclado (Flechas)
+            if (keys["ArrowUp"]) player.y -= player.speed;
+            if (keys["ArrowDown"]) player.y += player.speed;
+            if (keys["ArrowLeft"]) player.x -= player.speed;
+            if (keys["ArrowRight"]) player.x += player.speed;
 
-    function addNewTargetNode() {
-        const id = registeredNodes.length + 1;
-        const node = document.createElement('div');
-        node.className = 'click-target-node';
-        node.innerText = id;
+            // Limitar al jugador dentro de la caja de Undertale
+            player.x = Math.max(battleBox.x + player.size, Math.min(battleBox.x + battleBox.width - player.size, player.x));
+            player.y = Math.max(battleBox.y + player.size, Math.min(battleBox.y + battleBox.height - player.size, player.y));
 
-        const x = Math.floor(Math.random() * (area.clientWidth - 100)) + 50;
-        const y = Math.floor(Math.random() * (area.clientHeight - 180)) + 120;
+            // Generador de estrellas de "The star that doesn't want to fall"
+            starSpawnTimer++;
+            if (starSpawnTimer > 25) { // Spawn cada ~25 frames
+                stars.push({
+                    x: battleBox.x + Math.random() * (battleBox.width - 20) + 10,
+                    y: battleBox.y - 10,
+                    size: 8 + Math.random() * 8,
+                    speed: 2 + Math.random() * 3,
+                    angle: 0,
+                    rotSpeed: 0.05 + Math.random() * 0.05
+                });
+                starSpawnTimer = 0;
+            }
 
-        node.style.left = `${x}px`;
-        node.style.top = `${y}px`;
+            // Actualizar estrellas y comprobar colisiones
+            for (let i = stars.length - 1; i >= 0; i--) {
+                let s = stars[i];
+                s.y += s.speed;
+                s.angle += s.rotSpeed;
 
-        area.appendChild(node);
-        registeredNodes.push({ element: node, x, y });
-        printLog(`Baliza de disparo registrada #${id} [X:${x} Y:${y}]`);
-    }
+                // Colisión simple con el alma
+                let dist = Math.hypot(player.x - s.x, player.y - s.y);
+                if (dist < player.size + s.size/2) {
+                    // Colisión: Animación de parpadeo del alma (reducir salud/reiniciar en este prototipo)
+                    player.x = 320;
+                    player.y = 340;
+                    stars = []; // Limpiar pantalla al recibir golpe
+                    break;
+                }
 
-    function shootLaser(targetX, targetY) {
-        const laser = document.createElement('div');
-        laser.className = 'laser-beam';
-        const wRect = widget.getBoundingClientRect();
-        const aRect = area.getBoundingClientRect();
-
-        const startX = wRect.left + 19 - aRect.left;
-        const startY = wRect.top + 19 - aRect.top;
-
-        const angle = Math.atan2(targetY - startY, targetX - startX);
-        const distance = Math.hypot(targetY - startY, targetX - startX);
-
-        laser.style.width = `${distance}px`;
-        laser.style.left = `${startX}px`;
-        laser.style.top = `${startY}px`;
-        laser.style.transform = `rotate(${angle}rad)`;
-
-        area.appendChild(laser);
-        setTimeout(() => { laser.style.opacity = '0'; setTimeout(() => laser.remove(), 100); }, 80);
-    }
-
-    function clearAllNodes() {
-        document.querySelectorAll('.click-target-node').forEach(n => n.remove());
-        registeredNodes = [];
-        recordedClicks = [];
-        printLog("Memoria limpia de coordenadas.");
-    }
-
-    // --- ARRASTRE DEL WIDGET ---
-    let activeDrag = false;
-    let currentX, currentY, initialX, initialY;
-    let xOffset = 0, yOffset = 0;
-
-    dragHandle.addEventListener('touchstart', (e) => {
-        initialX = e.touches[0].clientX - xOffset;
-        initialY = e.touches[0].clientY - yOffset;
-        activeDrag = true;
-    });
-
-    document.addEventListener('touchmove', (e) => {
-        if (activeDrag) {
-            e.preventDefault();
-            currentX = e.touches[0].clientX - initialX;
-            currentY = e.touches[0].clientY - initialY;
-            xOffset = currentX;
-            yOffset = currentY;
-            widget.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+                // Eliminar estrellas fuera de la caja
+                if (s.y > battleBox.y + battleBox.height) {
+                    stars.splice(i, 1);
+                }
+            }
         }
-    }, { passive: false });
 
-    document.addEventListener('touchend', () => { activeDrag = false; });
-</script>
+        function drawBattle() {
+            // Limpiar fondo
+            ctx.fillStyle = "#000000";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Dibujar la interfaz del enemigo (La estrella colapsando)
+            ctx.fillStyle = "#eef4ff";
+            ctx.font = "16px 'Courier New'";
+            ctx.textAlign = "center";
+            ctx.fillText("The star that doesn't want to fall", 320, 40);
+
+            // Dibujar al jefe (Estrella caída titilante)
+            const time = Date.now() * 0.005;
+            const pulse = 1 + Math.sin(time) * 0.1;
+            drawBossStar(320, 110, 40 * pulse);
+
+            // Caja de Batalla
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 4;
+            ctx.strokeRect(battleBox.x, battleBox.y, battleBox.width, battleBox.height);
+
+            // Dibujar las Estrellas Proyectiles
+            stars.forEach(s => {
+                drawStarProjectile(s.x, s.y, s.size, s.angle);
+            });
+
+            // Dibujar el Alma del Jugador: "Corazón de Escarcha" (Azul con orejas de zorro)
+            drawPlayerSoul(player.x, player.y);
+        }
+
+        // Dibujar el alma en forma de corazón con pequeñas orejitas de zorro ártico
+        function drawPlayerSoul(x, y) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            // Pequeñas orejas del alma
+            ctx.fillStyle = "#00d2ff";
+            ctx.beginPath();
+            ctx.moveTo(-10, -8); ctx.lineTo(-12, -15); ctx.lineTo(-4, -10);
+            ctx.moveTo(10, -8); ctx.lineTo(12, -15); ctx.lineTo(4, -10);
+            ctx.fill();
+
+            // Corazón
+            ctx.fillStyle = "#00e1ff";
+            ctx.beginPath();
+            ctx.moveTo(0, 10);
+            // Curva izquierda
+            ctx.bezierCurveTo(-12, 0, -12, -10, 0, -10);
+            // Curva derecha
+            ctx.bezierCurveTo(12, -10, 12, 0, 0, 10);
+            ctx.fill();
+
+            // Brillo interior blanco
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc(-3, -4, 1.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        // Dibujar proyectil de estrella rotatoria
+        function drawStarProjectile(cx, cy, r, angle) {
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(angle);
+            ctx.fillStyle = "#7ce5ff";
+            ctx.shadowColor = "#0099ff";
+            ctx.shadowBlur = 10;
+            ctx.beginPath();
+            for (let i = 0; i < 5; i++) {
+                ctx.lineTo(Math.cos((18 + i * 72) * Math.PI / 180) * r, -Math.sin((18 + i * 72) * Math.PI / 180) * r);
+                ctx.lineTo(Math.cos((54 + i * 72) * Math.PI / 180) * (r/2), -Math.sin((54 + i * 72) * Math.PI / 180) * (r/2));
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // Dibujar jefe (Estrella gigante colapsando / Fase 2)
+        function drawBossStar(cx, cy, r) {
+            ctx.save();
+            ctx.translate(cx, cy);
+            
+            // Halo de energía distorsionado
+            const t = Date.now() * 0.01;
+            ctx.rotate(t * 0.2);
+            ctx.fillStyle = "rgba(100, 180, 255, 0.2)";
+            ctx.beginPath();
+            for (let i = 0; i < 8; i++) {
+                ctx.lineTo(Math.cos((i * 45) * Math.PI / 180) * (r * 1.3), -Math.sin((i * 45) * Math.PI / 180) * (r * 1.3));
+                ctx.lineTo(Math.cos((22.5 + i * 45) * Math.PI / 180) * (r * 0.7), -Math.sin((22.5 + i * 45) * Math.PI / 180) * (r * 0.7));
+            }
+            ctx.closePath();
+            ctx.fill();
+
+            // Estrella principal (Brillante)
+            ctx.fillStyle = "#ffffff";
+            ctx.shadowColor = "#00c3ff";
+            ctx.shadowBlur = 20;
+            ctx.beginPath();
+            for (let i = 0; i < 5; i++) {
+                ctx.lineTo(Math.cos((18 + i * 72) * Math.PI / 180) * r, -Math.sin((18 + i * 72) * Math.PI / 180) * r);
+                ctx.lineTo(Math.cos((54 + i * 72) * Math.PI / 180) * (r * 0.4), -Math.sin((54 + i * 72) * Math.PI / 180) * (r * 0.4));
+            }
+            ctx.closePath();
+            ctx.fill();
+
+            // Ojos de pánico del jefe (Temblorosos por la Fase 2)
+            const shake = Math.sin(t * 5) * 1.5;
+            ctx.fillStyle = "#0c152b";
+            ctx.beginPath();
+            ctx.arc(-8 + shake, -2, 3, 0, Math.PI * 2);
+            ctx.arc(8 + shake, -2, 3, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Boca preocupada / asustada
+            ctx.strokeStyle = "#0c152b";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(0 + shake, 6, 4, Math.PI, 0, false); // Triste / asustada
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        // BUCLE PRINCIPAL DEL JUEGO
+        function loop() {
+            if (gameState === "loading") {
+                updateLoading();
+                drawLoading();
+            } else if (gameState === "battle") {
+                updateBattle();
+                drawBattle();
+            }
+            requestAnimationFrame(loop);
+        }
+
+        // Arrancar juego
+        loop();
+    </script>
 </body>
 </html>
